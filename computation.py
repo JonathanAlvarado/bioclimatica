@@ -35,17 +35,46 @@ def get_all(table, solution = False):
     data = cursor.fetchall()
     return data
 
+def calculate(state, city, floors, solutions):
+    fcRef = 0.1
+    cgsRef = 1
+    kGlobalV = 5.319
+    areaTecho = areaMN = areaMS = areaME = areaMO = areaPV = 0
+    k = get_k(state, city, floors)
+
+    for i in solutions:
+        if solutions[1][0] == 'techo':
+            areaTecho += solutions[1][2]
+        elif solutions[1][0] == 'muroNorte':
+            areaMN += solutions[1][2]
+        elif solutions[1][0] == 'muroSur':
+            areaMS += solutions[1][2]
+        elif solutions[1][0] == 'muroEste':
+            areaME += solutions[1][2]
+        elif solutions[1][0] == 'muroOeste':
+            areaMO += solutions[1][2]
+        elif solutions[1][0] == 'Piso':
+            areaPV += solutions[1][2]
+
+    city_data = get_all("ciudades")
+    print city_data
+
+    for i in solutions:
+        solutions_details = get_all("soluciones")
+        
+
 try:
     con = mdb.connect(host='localhost', user='root', passwd='root', db='calcio73_nom020')
     cursor = con.cursor()
     state = 'Zacatecas'
     city = 'Fresnillo'
     floors = 4
-    solution = 'Ejemplo Muro'
-    k = get_k(state, city, floors)
-    value_R = get_R(solution)
-    print get_all("soluciones")
-
+    #tipo,solucion,area,porcion
+    solutions = [['muroNorte','Ejemplo Muro',20,'Muro Masivo'],['muroNorte','Ejemplo Muro',20,'Muro Masivo']]
+    #k = get_k(state, city, floors)
+    #value_R = get_R(solution)
+    #print get_all("soluciones")
+    calculate(state, city, floors,solutions)
 except mdb.Error, e:
     print "Error %d: %s" % (e.args[0], e.args[1])
     sys.exit(1)
