@@ -163,7 +163,7 @@ def calculate(state, city, floors, solutions):
 
     ganCalPorcentaje = ( ganCalTotMuroRef - ganCalTotMuroProy) / (ganCalTotMuroRef * -1)
 
-    print  ganCalPorcentaje * 100 
+    print  ganCalPorcentaje * 100
 
 
 
