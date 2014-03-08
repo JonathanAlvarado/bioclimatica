@@ -3,6 +3,9 @@ import numpy as np
 '''determina los valores atipicos de acuerdo al promedio de los datos (u)
 la desviacion estandard de los datos (s) y una constante m que provee el numero
 de desviaciones estandard a tomar en cuenta.
+https://groups.google.com/forum/#!topic/comp.lang.python/z1da1ldxNlo
+http://stackoverflow.com/questions/11686720/is-there-a-numpy-builtin-to-reject-outliers-from-a-list
+
 '''
 def outliers(data):
     m = 2

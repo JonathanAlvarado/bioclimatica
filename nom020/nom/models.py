@@ -11,6 +11,9 @@ class ciudades(models.Model):
 	ciudad = models.CharField(max_length=30)
 	estado = models.CharField(max_length=30)
 
+	def __unicode__(self):
+		return self.ciudad
+
 class ciudades_fg(models.Model):
 	ciudad = models.ForeignKey(ciudades)
 	fgtd = models.IntegerField(default=0)
@@ -46,9 +49,12 @@ class ciudades_temp(models.Model):
 
 class soluciones(models.Model):
 	nombre = models.CharField(max_length=30)
+	
+	def __unicode__(self):
+		return self.nombre
 
-class soluciones_details(models.Model):
-	solution = models.ForeignKey(soluciones)
+class soluciones_detalles(models.Model):
+	solucion = models.ForeignKey(soluciones)
 	valueR  = models.FloatField(default=0.0)
 	tipo = models.CharField(max_length=30)
 	tipo_porcion = models.CharField(max_length=30)
