@@ -1,14 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>{% block title %}{% endblock %}</title>
-	</head>
+{% extends "nom/base.html" %}
 
-	<body>
-		<h1>Prueba</h1>
-		{% block content %}{% endblock %}
+{% block title %}Tesis{% endblock %}
 
-		<h3>Copyleft</h3>
-		<p>© 2014 Jonathan Alvarado.</p>
-	</body>
-</html>
+{% block content %}
+	<div >
+	
+	<form action="" method="post">
+        {% csrf_token %}
+        <select>
+        <option value=0>Escoge</option>
+        {% for sol in solucion %}
+        <!--<input type="radio" name="solucion" id="solucion{{ forloop.counter }}" value="{{ sol.id }}" />
+    	<label for="solucion{{ forloop.counter }}">{{ sol.nombre }}</label><br />-->
+    	<option for="solucion{{ forloop.counter }}" value="{{ sol.id }}">{{ sol.nombre }}</option>
+        {% endfor %}
+        </select>
+        <input type="submit" value="Calcular">
+    </form>
+    </div>
+    
+    
+    
+    <!--<p>Resultado {{ result }} </p>-->
+{% endblock %}

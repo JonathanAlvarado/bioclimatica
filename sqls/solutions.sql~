@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `soluciones`
 --
 
-CREATE TABLE IF NOT EXISTS `nom_soluciones` (
+CREATE TABLE IF NOT EXISTS `soluciones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `nom_soluciones` (
 -- Dumping data for table `soluciones`
 --
 
-INSERT INTO `nom_soluciones` (`id`, `nombre`) VALUES
+INSERT INTO `soluciones` (`id`, `nombre`) VALUES
 (1, 'Ejemplo Muro'),
 (2, 'Ejemplo Losa'),
 (3, 'Ejemplo Vidrio'),
