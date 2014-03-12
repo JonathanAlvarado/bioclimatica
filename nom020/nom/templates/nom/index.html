@@ -4,16 +4,29 @@
 
 {% block content %}
 	<div >
-	
+	<label>Estado</label>
+	<select>
+	{% for edo in estados %}
+    	<option for="estados{{ forloop.counter }}" value="{{ edo.id }}">{{ edo.estado }}</option>
+    {% endfor %}
+    </select>
+
+    <!--<label>Ciudad</label>
+	<select>
+	{% for cd in ciudades %}
+    	<option for="ciudades{{ forloop.counter }}" value="{{ cd.id }}">{{ cd.ciudad }}</option>
+    {% endfor %}
+    </select>-->
+
 	<form action="" method="post">
         {% csrf_token %}
         <select>
-        <option value=0>Escoge</option>
-        {% for sol in solucion %}
+        	<option value=0>Escoge</option>
+        	{% for sol in solucion %}
         <!--<input type="radio" name="solucion" id="solucion{{ forloop.counter }}" value="{{ sol.id }}" />
     	<label for="solucion{{ forloop.counter }}">{{ sol.nombre }}</label><br />-->
-    	<option for="solucion{{ forloop.counter }}" value="{{ sol.id }}">{{ sol.nombre }}</option>
-        {% endfor %}
+    			<option for="solucion{{ forloop.counter }}" value="{{ sol.id }}">{{ sol.nombre }}</option>
+        	{% endfor %}
         </select>
         <input type="submit" value="Calcular">
     </form>

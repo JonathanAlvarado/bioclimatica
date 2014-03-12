@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `nom_ciudades` (
 -- Dumping data for table `ciudades`
 --
 
-INSERT INTO `nom_ciudades` (`id`, `estado`, `ciudad`) VALUES
+INSERT INTO `nom_ciudades` (`id`, `state`, `city`) VALUES
 (1, 'Aguascalientes ', 'Aguascalientes'),
 (2, 'Baja California Sur', 'La Paz'),
 (3, 'Baja California Sur', 'Cabo San Lucas'),
