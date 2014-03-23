@@ -1,7 +1,12 @@
 from django.contrib import admin
-from nom.models import ciudades, ciudades_fg, ciudades_k, ciudades_temp, soluciones, soluciones_detalles
+from nom.models import estados, ciudades, ciudades_fg, ciudades_k, ciudades_temp, soluciones, soluciones_detalles
 
 # Register your models here.
+class estado_admin(admin.ModelAdmin):
+	list_display = ('id','estado')
+	search_fields = ['estado']
+
+
 class cds_fg_inline(admin.TabularInline):
 	model = ciudades_fg
 	extra = 1
@@ -31,5 +36,6 @@ class solucion_admin(admin.ModelAdmin):
 	list_display = ('id','nombre')
 	inlines = [sol_detalles_inline]
 
+admin.site.register(estados, estado_admin)
 admin.site.register(ciudades, ciudad_admin)
 admin.site.register(soluciones, solucion_admin)

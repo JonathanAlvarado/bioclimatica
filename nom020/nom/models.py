@@ -7,12 +7,20 @@ Email address: jonathan.aam92@gmail.com
 Password: 
 '''
 # Create your models here.
-class ciudades(models.Model):
-	ciudad = models.CharField(max_length=30)
+
+class estados(models.Model):
 	estado = models.CharField(max_length=30)
 
 	def __unicode__(self):
+		return self.estado
+
+class ciudades(models.Model):
+	estado = models.ForeignKey(estados)
+	ciudad = models.CharField(max_length=30)
+
+	def __unicode__(self):
 		return self.ciudad
+
 
 class ciudades_fg(models.Model):
 	ciudad = models.ForeignKey(ciudades)

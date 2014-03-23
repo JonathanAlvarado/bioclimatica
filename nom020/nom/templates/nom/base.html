@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load dajaxice_templatetags %}
 
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -28,11 +29,12 @@
 
 	<!-- Favicons
 	================================================== -->
-	<link rel="shortcut icon" href="images/favicon.ico">
-	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	<link rel="shortcut icon" href="{% static 'nom/images/favicon.ico' %}"/>
+	<link rel="apple-touch-icon" href="{% static 'nom/images/apple-touch-icon.png' %}"/>
+	<link rel="apple-touch-icon" sizes="72x72" href="{% static 'nom/images/apple-touch-icon-72x72.png' %}"/>
+	<link rel="apple-touch-icon" sizes="114x114" href="{% static 'nom/images/apple-touch-icon-114x114.png' %}"/>
 		
+	{% dajaxice_js_import %}
 </head>
 
 <body>
@@ -47,7 +49,10 @@
 		</div>
 
 		<div class="sixteen columns clearfix">
-			{% block content %}{% endblock %}
+			{% block content %}
+				
+
+			{% endblock %}
 			<!--<h3>Three Core Principles</h3>
 			<p>Skeleton is built on three core principles:</p>
 			<ul class="square">
@@ -63,5 +68,9 @@
 		</div>
 
 	</div>
+	<!-- JQUERYS
+	================================================== -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	{% block jquerys %}{% endblock %}
 </body>
 </html>
