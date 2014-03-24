@@ -4,6 +4,7 @@ from nom.models import soluciones, estados, ciudades
 class cityForm(forms.Form):
 	state_choices = [('', 'Escoge un estado'), ] + [(edo.id, edo.estado) for edo in estados.objects.all()]
 	estado = forms.ChoiceField( choices = state_choices )
+	ciudad = forms.ChoiceField([('0','Escoge una ciudad')])
 
 '''
 class ContactForm(forms.Form):

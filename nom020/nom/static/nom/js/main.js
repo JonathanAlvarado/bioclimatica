@@ -1,5 +1,3 @@
-var postUrl = "http://localhost:8000/nom/";
-
 $( document ).ready(function() {
 
 	$( "#id_estado" ).on('change', function() {
@@ -9,6 +7,5 @@ $( document ).ready(function() {
 })
 
 function display_cities(edo){
-    alert(edo);
-	
+	Dajaxice.nom.update_city( Dajax.process, {'option':edo} );
 }
