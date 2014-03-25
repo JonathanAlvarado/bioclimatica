@@ -4,45 +4,13 @@
 {% block title %}Tesis{% endblock %}
 
 {% block content %}
-	<!--<div >
-	<label>Estado</label>
-	<select id="estados">
-	<option value=0>Escoge</option>
-	{% for edo in estados %}
-    	<option for="estados{{ forloop.counter }}" value="{{ edo.id }}">{{ edo.estado }}</option>
-    {% endfor %}
-    </select>
-
-    <label>Ciudad</label>
-	<select>
-	{% for cd in ciudades %}
-    	<option for="ciudades{{ forloop.counter }}" value="{{ cd.id }}">{{ cd.ciudad }}</option>
-    {% endfor %}
-    </select>-->
-
-	<!--<form action="" method="post">
-        {% csrf_token %}
-        <select>
-        	<option value=0>Escoge</option>
-        	{% for sol in solucion %}
-        <input type="radio" name="solucion" id="solucion{{ forloop.counter }}" value="{{ sol.id }}" />
-    	<label for="solucion{{ forloop.counter }}">{{ sol.nombre }}</label><br />
-    			<option for="solucion{{ forloop.counter }}" value="{{ sol.id }}">{{ sol.nombre }}</option>
-        	{% endfor %}
-        </select>
-        <input type="submit" value="Calcular">
-    </form>
-    </div>-->
 
     <div class="six columns alpha">
-	
-	<form id="data_form" action="" method="post">
-        <table>
+	   <form id="data_form" action="" method="post" accept-charset="utf-8">
             {{ form.as_p }}
-        </table>
         
-        <input class="button" type="submit" value="Submit">
-    </form>
+            <input class="button" type="button" value="Calcular" onclick="send_form();">
+        </form>
     </div>
 
     <!--<p>Resultado {{ result }} </p>-->

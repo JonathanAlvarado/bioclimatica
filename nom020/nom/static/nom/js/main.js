@@ -9,3 +9,7 @@ $( document ).ready(function() {
 function display_cities(edo){
 	Dajaxice.nom.update_city( Dajax.process, {'option':edo} );
 }
+
+function send_form(){
+    Dajaxice.nom.send_form(Dajax.process,{'form':$('#data_form').serialize(true)});
+}

@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `nom_ciudades_fg` (
 -- Dumping data for table `nom_ciudades_fg`
 --
 
-INSERT INTO `nom_ciudades_fg` (`ciudad_id`, `fgtd`, `fg_mN`, `fg_mE`, `fg_mO`, `fg_mS`) VALUES
+INSERT INTO `nom_ciudades` (`ciudad_id`, `fgtd`, `fg_mN`, `fg_mE`, `fg_mO`, `fg_mS`) VALUES
 (1, 274, 91, 137, 146, 118),
 (2, 322, 70, 159, 164, 131),
 (3, 322, 70, 159, 164, 131),

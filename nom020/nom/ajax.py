@@ -1,6 +1,7 @@
 from dajaxice.decorators import dajaxice_register
 from dajax.core import Dajax
-from nom.models import ciudades
+from nom.models import soluciones, ciudades_k, ciudades_fg, ciudades_temp
+from django.db.models import Q
 
 @dajaxice_register(name='nom.update_city')
 def update_city(request, option):
@@ -16,3 +17,166 @@ def update_city(request, option):
 
 	dajax.assign( '#id_ciudad', 'innerHTML', ''.join( options ) )
 	return dajax.json()
+
+@dajaxice_register(name='nom.send_form')
+def send_form(request, form):
+	dajax = Dajax()
+	form = cityForm( deserialize_form( form ) )
+
+	if form.is_valid():
+		dajax.remove_css_class('#data_form input', 'error')
+		state = int( form.cleaned_data.get('estado') )
+		city = int( form.cleaned_data.get('ciudad') )
+		floors = int( form.cleaned_data.get('pisos') )
+		
+
+		dajax.alert("Form is_valid(), your username is: %s" % form.cleaned_data.get('username'))
+	else:
+		dajax.remove_css_class('#data_form input', 'error')
+		for error in form.errors:
+			dajax.add_css_class('#id_%s' % error, 'error')
+	return dajax.json()
+
+
+def get_k(state, city, floors):
+    if(floors == 1):
+        data = ciudades_k.objects.get( ciudad_id = city )
+        k_roof = data.kref_3niv
+        k_wall = data.kref_3niv
+
+    elif(floors == 2):
+        data = ciudades_k.objects.get( ciudad_id = city )
+        k_roof = data.kref_mas3niv_techo
+        k_wall = data.kref_mas3niv_pared
+
+    return k_roof,k_wall
+
+
+def calculate(state, city, floors, solutions):
+    fcRef = 0.1
+    cgsRef = 1
+    kGlobalV = 5.319
+    areaTecho = areaMN = areaMS = areaME = areaMO = areaPV = 0
+    ganCalTechoProy=0;
+    ganRadVentTechoProy = ganRadVentNProy = ganRadVentSProy = ganRadVentEProy = ganRadVentOProy = ganCalTechoRef = 0
+    coConduc = 0
+    ganCalMNProy = ganCalMNRef = ganCalMEProy = ganCalMERef = ganCalMSProy = ganCalMSRef = ganCalMOProy = ganCalMPisoProy = ganCalMORef = 0
+    ganRadVentTechoRef = ganRadVentNRef = ganRadVentERef = ganRadVentSRef = ganRadVentORef = 0
+
+    k = get_k(state, city, floors)
+
+    for i in solutions:
+        if solutions[1][0] == 'techo':
+            areaTecho += solutions[1][2]
+        elif solutions[1][0] == 'muroNorte':
+            areaMN += solutions[1][2]
+        elif solutions[1][0] == 'muroSur':
+            areaMS += solutions[1][2]
+        elif solutions[1][0] == 'muroEste':
+            areaME += solutions[1][2]
+        elif solutions[1][0] == 'muroOeste':
+            areaMO += solutions[1][2]
+        elif solutions[1][0] == 'Piso':
+            areaPV += solutions[1][2]
+
+    fg = ciudades_fg.objects.get( ciudad_id = city )
+    temp = ciudades_temp.objects.get( ciudad_id = city )
+    
+    for i in range( len(solutions) ):
+        solutions_details = get_all("soluciones")
+
+        if solutions[i][0] == "techo":
+            if solutions[i][1] == "Superficie Inferior":
+                ganCalTechoProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][7] - city_data[0][6] ) )
+            elif solutions[i][1] == "Techo":
+                ganCalTechoProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][8] - city_data[0][6] ) )
+            elif solutions[i][1] == "Domo":
+                ganCalTechoProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][17] - city_data[0][6] ) )
+                
+                ganRadVentTechoProy += ( solutions_details[0][6] * solution[i][3] * city_data[0][22] - solutions_details[0][5]);
+
+        elif solutions[i][0] == "muroNorte":
+            if solutions[i][1] == "Ventana":
+                ganCalMNProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][18] - city_data[0][6] ) )
+                
+                ganRadVentNProy += ( solutions_details[0][6] * solutions[i][2] * city_data[0][23] * solutions_details[0][5] )
+            
+            elif solutions[i][0] == "Muro Masivo":
+                ganCalMNProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][9] - city_data[0][6] ) )
+                
+            elif solutions[i][0] == "Muro Ligero":
+                ganCalMNProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][13] - city_data[0][6] ) )
+        
+        elif solutions[i][0] == "muroEste":
+            if solutions[i][1] == "Ventana":
+                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][19] - city_data[0][6] ) )
+                
+                ganRadVentEProy += ( solutions_details[0][6] * solutions[i][2] * city_data[0][24] * solutions_details[0][5] )
+            
+            elif solutions[i][0] == "Muro Masivo":
+                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][10] - city_data[0][6] ) )
+                
+            elif solutions[i][0] == "Muro Ligero":
+                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][14] - city_data[0][6] ) )
+
+        elif solutions[i][0] == "muroSur":
+            if solutions[i][1] == "Ventana":
+                ganCalMSProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][21] - city_data[0][6] ) )
+                
+                ganRadVentSProy += ( solutions_details[0][6] * solutions[i][2] * city_data[0][26] * solutions_details[0][5] )
+            
+            elif solutions[i][0] == "Muro Masivo":
+                ganCalMSProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][12] - city_data[0][6] ) )
+                
+            elif solutions[i][0] == "Muro Ligero":
+                ganCalMSProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][16] - city_data[0][6] ) )
+        
+
+        elif solutions[i][0] == "muroOeste":
+            if solutions[i][1] == "Ventana":
+                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][20] - city_data[0][6] ) )
+                
+                ganRadVentEProy += ( solutions_details[0][6] * solutions[i][2] * city_data[0][25] * solutions_details[0][5] )
+            
+            elif solutions[i][0] == "Muro Masivo":
+                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][11] - city_data[0][6] ) )
+                
+            elif solutions[i][0] == "Muro Ligero":
+                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][15] - city_data[0][6] ) )
+
+
+    ganRadVentTechoRef += ( cgsRef * areaTecho * (0) * city_data[0][22] )
+    ganCalTechoRef += ( k[0] * areaTecho * ( 1 - (0) ) * ( city_data[0][8] - city_data[0][6] ) )
+    coConducTecho = ganCalTechoProy - ganCalTechoRef
+
+    ganRadVentNRef += ( cgsRef * areaMN * ( fcRef ) * city_data[0][23] )
+    ganCalMNRef += ( k[1] * areaMN * (1 - ( fcRef )) * ( city_data[0][9 ] - city_data[0][6] ) )
+    ganCalVentNRef = k[0] * areaMN * (fcRef) * ( city_data[0][18] - city_data[0][6] )
+    coConducMN = ganCalMNProy - ganCalMNRef
+
+    ganRadVentERef += ( cgsRef * areaME * ( fcRef ) * city_data[0][24] );
+    ganCalMERef += ( k[1] * areaME * (1 - ( fcRef ) ) * ( city_data[0][10] - city_data[0][6] ) )
+    ganCalVentERef = k[0] * areaME * ( fcRef ) * (city_data[0][19] - city_data[0][6] )
+
+    ganRadVentSRef += ( cgsRef * areaMS * ( fcRef ) * city_data[0][26]);
+    ganCalMSRef += ( k[1] * areaMS * (1 - ( fcRef ) ) * ( city_data[0][12 ] - city_data[0][6] ) );
+    ganCalVentSRef = k[0] * areaMS * ( fcRef ) * ( city_data[0][21] - city_data[0][6] )
+
+    ganRadVentORef += ( cgsRef * areaMO * ( fcRef ) * city_data[0][25]);
+    ganCalMORef += ( k[1] * areaMO * (1 - ( fcRef ) ) * ( city_data[0][11] - city_data[0][6] ) );
+    ganCalVentORef = k[0] * areaMO * ( fcRef ) * ( city_data[0][20] - city_data[0][6] )
+
+    ganRadTotRef = ganRadVentNRef + ganRadVentERef + ganRadVentORef + ganRadVentSRef + ganRadVentTechoRef
+    ganRadTotProy = ganRadVentNProy + ganRadVentEProy + ganRadVentOProy + ganRadVentSProy + ganRadVentTechoProy
+
+    ganCalTotMuroRef = ganCalMNRef + ganCalMERef + ganCalMORef + ganCalMSRef + ganCalTechoRef + ganCalVentNRef + ganCalVentERef + ganCalVentORef + ganCalVentSRef
+    ganCalTotMuroProy = ganCalMNProy + ganCalMEProy + ganCalMOProy + ganCalMSProy + ganCalTechoProy
+
+    ganCalTotCondProy = ganCalTotMuroProy
+
+    ganCalTotMuroRef = ganCalTotMuroRef + ganRadTotRef
+    ganCalTotMuroProy = ganCalTotMuroProy + ganRadTotProy
+
+    ganCalPorcentaje = ( ganCalTotMuroRef - ganCalTotMuroProy) / (ganCalTotMuroRef * -1)
+
+    return  ganCalPorcentaje * 100
