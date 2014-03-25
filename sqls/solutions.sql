@@ -10,7 +10,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `nom_soluciones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(30) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
   `tipo` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=95 ;
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `nom_soluciones` (
 -- Dumping data for table `nom_soluciones`
 --
 
-INSERT INTO `nom_soluciones` (`descripcion`, `tipo`) VALUES
+INSERT INTO `nom_soluciones` (`nombre`, `tipo`) VALUES
 ('Concreto base', 'techo'),
 ('Foamular sobre losa 1 pulg.', 'techo'),
 ('Foamular sobre losa 1.5 pulg.', 'techo'),

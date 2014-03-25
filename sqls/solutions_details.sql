@@ -23,10 +23,10 @@ CREATE TABLE IF NOT EXISTS `nom_soluciones_detalles` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=95 ;
 
 --
--- Dumping data for table `soluciones_usuario`
+-- Dumping data for table `nom_soluciones_detalles`
 --
 
-INSERT INTO `soluciones_usuario` (`id`, `material`, `tipo_porcion`, `valorR`, `se`, `coeficiente_sombreado`) VALUES
+INSERT INTO `nom_soluciones_detalles` (`solucion_id`, `material`, `tipo_porcion`, `valorR`, `se`, `coeficiente_sombreado`) VALUES
 (1, 'Concreto', 'techo', 0.3229, 1, 1),
 (2, 'Concreto', 'techo', 1.4763, 1, 1),
 (3, 'Concreto', 'techo', 1.9647, 1, 1),
