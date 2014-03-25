@@ -3,8 +3,17 @@ from nom.models import soluciones, estados, ciudades
 
 class cityForm(forms.Form):
 	state_choices = [('', 'Escoge un estado'), ] + [(edo.id, edo.estado) for edo in estados.objects.all()]
+	solutions_choices = [('', 'Escoge un material'), ] + [(sol.id, sol.nombre) for sol in soluciones.objects.all()]
 	estado = forms.ChoiceField( choices = state_choices )
 	ciudad = forms.ChoiceField([('0','Escoge una ciudad')])
+	muroNorte = forms.ChoiceField( choices = solutions_choices, label = "Material Muro Norte" )
+	areaN = forms.CharField(label = "Area Muro Norte")
+	muroSur = forms.ChoiceField( choices = solutions_choices, label = "Material Muro Sur" )
+	areaS = forms.CharField(label = "Area Muro Sur")
+	muroEste = forms.ChoiceField( choices = solutions_choices, label = "Material Muro Este" )
+	areaE = forms.CharField(label = "Area Muro Este")
+	muroOeste = forms.ChoiceField( choices = solutions_choices, label = "Material Muro Oeste" )
+	areaO = forms.CharField(label = "Area Muro Oeste")
 
 '''
 class ContactForm(forms.Form):

@@ -56,15 +56,29 @@ class ciudades_temp(models.Model):
 	temp_ventS = models.IntegerField(default=0)
 
 class soluciones(models.Model):
+	tipo_choices = (
+        ('techo', 'Techo'),
+        ('ventana', 'Ventana'),
+        ('piso', 'Piso'),
+        ('muro', 'Muro'),
+    )
 	nombre = models.CharField(max_length=30)
+	tipo = models.CharField(max_length=10, choices = tipo_choices)
 	
 	def __unicode__(self):
 		return self.nombre
 
 class soluciones_detalles(models.Model):
+	tipo_porcion_choices = (
+        ('techo', 'Techo'),
+        ('ventana', 'Ventana'),
+        ('piso ventilado', 'Piso ventilado'),
+        ('muro ligero', 'Muro Ligero'),
+        ('muro masivo', 'Muro Masivo')
+    )
 	solucion = models.ForeignKey(soluciones)
-	valueR  = models.FloatField(default=0.0)
-	tipo = models.CharField(max_length=30)
-	tipo_porcion = models.CharField(max_length=30)
+	material = models.CharField(max_length=30)
+	tipo_porcion = models.CharField(max_length=20, choices = tipo_porcion_choices)
+	valorR  = models.FloatField(default=0.0)
 	se = models.FloatField(default=0.0)
 	coeficiente_sombreado = models.FloatField(default=0.0)
