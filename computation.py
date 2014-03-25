@@ -128,7 +128,7 @@ def calculate(state, city, floors, solutions):
             elif solutions[i][0] == "Muro Ligero":
                 ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][15] - city_data[0][6] ) )
 
-
+    print city_data[0][29]
     ganRadVentTechoRef += ( cgsRef * areaTecho * (0) * city_data[0][22] )
     ganCalTechoRef += ( k[0] * areaTecho * ( 1 - (0) ) * ( city_data[0][8] - city_data[0][6] ) )
     coConducTecho = ganCalTechoProy - ganCalTechoRef

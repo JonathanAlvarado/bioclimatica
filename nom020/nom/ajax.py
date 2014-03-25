@@ -1,6 +1,6 @@
 from dajaxice.decorators import dajaxice_register
 from dajax.core import Dajax
-from nom.models import soluciones, ciudades_k, ciudades_fg, ciudades_temp
+from nom.models import soluciones, soluciones_detalles, ciudades_k, ciudades_fg, ciudades_temp
 from django.db.models import Q
 
 @dajaxice_register(name='nom.update_city')
@@ -30,7 +30,7 @@ def send_form(request, form):
 		floors = int( form.cleaned_data.get('pisos') )
 		
 
-		dajax.alert("Form is_valid(), your username is: %s" % form.cleaned_data.get('username'))
+		#dajax.alert("Form is_valid(), your username is: %s" % form.cleaned_data.get('username'))
 	else:
 		dajax.remove_css_class('#data_form input', 'error')
 		for error in form.errors:
@@ -83,88 +83,88 @@ def calculate(state, city, floors, solutions):
     temp = ciudades_temp.objects.get( ciudad_id = city )
     
     for i in range( len(solutions) ):
-        solutions_details = get_all("soluciones")
+        sol_details = soluciones_detalles.objects.get( solucion_id = algo )
 
         if solutions[i][0] == "techo":
             if solutions[i][1] == "Superficie Inferior":
-                ganCalTechoProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][7] - city_data[0][6] ) )
+                ganCalTechoProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_sup_int - temp.temp_int ) )
             elif solutions[i][1] == "Techo":
-                ganCalTechoProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][8] - city_data[0][6] ) )
+                ganCalTechoProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_techo - temp.temp_int ) )
             elif solutions[i][1] == "Domo":
-                ganCalTechoProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][17] - city_data[0][6] ) )
+                ganCalTechoProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_trluz_domo - temp.temp_int ) )
                 
-                ganRadVentTechoProy += ( solutions_details[0][6] * solution[i][3] * city_data[0][22] - solutions_details[0][5]);
+                ganRadVentTechoProy += ( solutions_details[0][6] * solution[i][3] * fg.fgtd - solutions_details[0][5]);
 
         elif solutions[i][0] == "muroNorte":
             if solutions[i][1] == "Ventana":
-                ganCalMNProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][18] - city_data[0][6] ) )
+                ganCalMNProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_ventN - temp.temp_int ) )
                 
-                ganRadVentNProy += ( solutions_details[0][6] * solutions[i][2] * city_data[0][23] * solutions_details[0][5] )
+                ganRadVentNProy += ( solutions_details[0][6] * solutions[i][2] * fg.fg_mN * solutions_details[0][5] )
             
             elif solutions[i][0] == "Muro Masivo":
-                ganCalMNProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][9] - city_data[0][6] ) )
+                ganCalMNProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_mmN - temp.temp_int ) )
                 
             elif solutions[i][0] == "Muro Ligero":
-                ganCalMNProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][13] - city_data[0][6] ) )
+                ganCalMNProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_mlN - temp.temp_int ) )
         
         elif solutions[i][0] == "muroEste":
             if solutions[i][1] == "Ventana":
-                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][19] - city_data[0][6] ) )
+                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_ventE - temp.temp_int ) )
                 
-                ganRadVentEProy += ( solutions_details[0][6] * solutions[i][2] * city_data[0][24] * solutions_details[0][5] )
+                ganRadVentEProy += ( solutions_details[0][6] * solutions[i][2] * fg.fg_mE * solutions_details[0][5] )
             
             elif solutions[i][0] == "Muro Masivo":
-                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][10] - city_data[0][6] ) )
+                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_mmE - temp.temp_int ) )
                 
             elif solutions[i][0] == "Muro Ligero":
-                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][14] - city_data[0][6] ) )
+                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_mlO - temp.temp_int ) )
 
         elif solutions[i][0] == "muroSur":
             if solutions[i][1] == "Ventana":
-                ganCalMSProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][21] - city_data[0][6] ) )
+                ganCalMSProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_ventS - temp.temp_int ) )
                 
-                ganRadVentSProy += ( solutions_details[0][6] * solutions[i][2] * city_data[0][26] * solutions_details[0][5] )
+                ganRadVentSProy += ( solutions_details[0][6] * solutions[i][2] * fg.fg_mS * solutions_details[0][5] )
             
             elif solutions[i][0] == "Muro Masivo":
-                ganCalMSProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][12] - city_data[0][6] ) )
+                ganCalMSProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_mmS - temp.temp_int ) )
                 
             elif solutions[i][0] == "Muro Ligero":
-                ganCalMSProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][16] - city_data[0][6] ) )
+                ganCalMSProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_mlS - temp.temp_int ) )
         
 
         elif solutions[i][0] == "muroOeste":
             if solutions[i][1] == "Ventana":
-                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][20] - city_data[0][6] ) )
+                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_ventO - temp.temp_int ) )
                 
-                ganRadVentEProy += ( solutions_details[0][6] * solutions[i][2] * city_data[0][25] * solutions_details[0][5] )
+                ganRadVentEProy += ( solutions_details[0][6] * solutions[i][2] * fg.fg_mO * solutions_details[0][5] )
             
             elif solutions[i][0] == "Muro Masivo":
-                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][11] - city_data[0][6] ) )
+                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_mmO - temp.temp_int ) )
                 
             elif solutions[i][0] == "Muro Ligero":
-                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( city_data[0][15] - city_data[0][6] ) )
+                ganCalMEProy += ( (1 / get_R( solutions[i][3] ) ) * solutions[i][2] * ( temp.temp_mlO - temp.temp_int ) )
 
 
-    ganRadVentTechoRef += ( cgsRef * areaTecho * (0) * city_data[0][22] )
-    ganCalTechoRef += ( k[0] * areaTecho * ( 1 - (0) ) * ( city_data[0][8] - city_data[0][6] ) )
+    ganRadVentTechoRef += ( cgsRef * areaTecho * (0) * fg.fgtd )
+    ganCalTechoRef += ( k[0] * areaTecho * ( 1 - (0) ) * ( temp.temp_techo - temp.temp_int ) )
     coConducTecho = ganCalTechoProy - ganCalTechoRef
 
-    ganRadVentNRef += ( cgsRef * areaMN * ( fcRef ) * city_data[0][23] )
-    ganCalMNRef += ( k[1] * areaMN * (1 - ( fcRef )) * ( city_data[0][9 ] - city_data[0][6] ) )
-    ganCalVentNRef = k[0] * areaMN * (fcRef) * ( city_data[0][18] - city_data[0][6] )
+    ganRadVentNRef += ( cgsRef * areaMN * ( fcRef ) * fg.fg_mN )
+    ganCalMNRef += ( k[1] * areaMN * (1 - ( fcRef )) * ( temp.temp_mmN - temp.temp_int ) )
+    ganCalVentNRef = k[0] * areaMN * (fcRef) * ( temp.temp_ventN - temp.temp_int )
     coConducMN = ganCalMNProy - ganCalMNRef
 
-    ganRadVentERef += ( cgsRef * areaME * ( fcRef ) * city_data[0][24] );
-    ganCalMERef += ( k[1] * areaME * (1 - ( fcRef ) ) * ( city_data[0][10] - city_data[0][6] ) )
-    ganCalVentERef = k[0] * areaME * ( fcRef ) * (city_data[0][19] - city_data[0][6] )
+    ganRadVentERef += ( cgsRef * areaME * ( fcRef ) * fg.fg_mE );
+    ganCalMERef += ( k[1] * areaME * (1 - ( fcRef ) ) * ( temp.temp_mmE - temp.temp_int ) )
+    ganCalVentERef = k[0] * areaME * ( fcRef ) * (temp.temp_ventE - temp.temp_int )
 
-    ganRadVentSRef += ( cgsRef * areaMS * ( fcRef ) * city_data[0][26]);
-    ganCalMSRef += ( k[1] * areaMS * (1 - ( fcRef ) ) * ( city_data[0][12 ] - city_data[0][6] ) );
-    ganCalVentSRef = k[0] * areaMS * ( fcRef ) * ( city_data[0][21] - city_data[0][6] )
+    ganRadVentSRef += ( cgsRef * areaMS * ( fcRef ) * fg.fg_mS);
+    ganCalMSRef += ( k[1] * areaMS * (1 - ( fcRef ) ) * ( temp.temp_mmS - temp.temp_int ) );
+    ganCalVentSRef = k[0] * areaMS * ( fcRef ) * ( temp.temp_ventS - temp.temp_int )
 
-    ganRadVentORef += ( cgsRef * areaMO * ( fcRef ) * city_data[0][25]);
-    ganCalMORef += ( k[1] * areaMO * (1 - ( fcRef ) ) * ( city_data[0][11] - city_data[0][6] ) );
-    ganCalVentORef = k[0] * areaMO * ( fcRef ) * ( city_data[0][20] - city_data[0][6] )
+    ganRadVentORef += ( cgsRef * areaMO * ( fcRef ) * fg.fg_mO);
+    ganCalMORef += ( k[1] * areaMO * (1 - ( fcRef ) ) * ( temp.temp_mmO - temp.temp_int ) );
+    ganCalVentORef = k[0] * areaMO * ( fcRef ) * ( temp.temp_ventO - temp.temp_int )
 
     ganRadTotRef = ganRadVentNRef + ganRadVentERef + ganRadVentORef + ganRadVentSRef + ganRadVentTechoRef
     ganRadTotProy = ganRadVentNProy + ganRadVentEProy + ganRadVentOProy + ganRadVentSProy + ganRadVentTechoProy
