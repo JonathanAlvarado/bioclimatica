@@ -13,3 +13,7 @@ function display_cities(edo){
 function send_form(){
     Dajaxice.nom.send_form(Dajax.process,{'form':$('#data_form').serialize(true)});
 }
+
+function my_js_callback(data){
+	alert(data.message);
+}

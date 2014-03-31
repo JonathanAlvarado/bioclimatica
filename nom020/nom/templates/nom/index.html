@@ -11,6 +11,7 @@
         
             <input class="button" type="button" value="Calcular" onclick="send_form();">
         </form>
+        <button onclick="Dajaxice.nom.sayhello(my_js_callback);">Click me</button>
     </div>
 
     <!--<p>Resultado {{ result }} </p>-->
@@ -18,5 +19,4 @@
 
 {% block jquerys %}
 <script src="{% static 'nom/js/main.js' %}"></script>
-<script src="{% static 'nom/js/jquery.dajax.core.js' %}"></script>
 {% endblock %}
