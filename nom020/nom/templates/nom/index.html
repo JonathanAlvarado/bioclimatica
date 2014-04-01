@@ -6,6 +6,7 @@
 {%block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'nom/nivo-lightbox.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'nom/themes/default/default.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'nom/footable.core.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -27,8 +28,29 @@
 		<input type="button" value="Multiply!" onclick="calculate();">
 
 		<div id="hidden-content" style="display: none;">
-			<h2 style="margin-top: 0;">Inline HMTL</h2>
-			<p>This content is hidden on the page.</p>
+			<!--<h2 style="margin-top: 0;">Inline HMTL</h2>
+			<p>This content is hidden on the page.</p>-->
+			<table class="footable">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th data-hide="phone,tablet">Phone</th>
+						<th data-hide="phone,tablet">Email</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Bob Builder</td>
+						<td>555-12345</td>
+						<td>bob@home.com</td>
+					</tr>
+					<tr>
+						<td>Bridget Jones</td>
+						<td>544-776655</td>
+						<td>bjones@mysite.com</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
     </div>
 
@@ -39,5 +61,5 @@
 <script src="{% static 'nom/js/main.js' %}"></script>
 <script src="{% static '/static/dajax/jquery.dajax.core.js' %}"></script>
 <script src="{% static 'nom/js/nivo-lightbox.js' %}"}></script>
-</script>
+<script src="{% static 'nom/js/footable.js' %}"></script>
 {% endblock %}

@@ -1,5 +1,6 @@
 $( document ).ready(function() {
 	$('.six a').nivoLightbox({ effect: 'fade' });
+	load_tables();
 
 	get_states();
 
@@ -7,7 +8,7 @@ $( document ).ready(function() {
   		display_cities( $(this).val() );
   	});
   
-})
+});
 
 function get_states(){
 	Dajaxice.nom.get_states( Dajax.process )
@@ -23,4 +24,8 @@ function display_cities(edo){
 
 function calculate(){
 	Dajaxice.nom.multiply(Dajax.process,{'a':$('#a').val(),'b':$('#b').val()})
+}
+
+function load_tables(){
+	$('.footable').footable();
 }
