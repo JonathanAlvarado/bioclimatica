@@ -17,3 +17,7 @@ function send_form(){
 function my_js_callback(data){
 	alert(data.message);
 }
+
+function calculate(){
+	Dajaxice.nom.multiply(Dajax.process,{'a':$('#a').val(),'b':$('#b').val()})
+}
