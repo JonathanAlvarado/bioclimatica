@@ -3,19 +3,33 @@
 
 {% block title %}Tesis{% endblock %}
 
+{%block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'nom/nivo-lightbox.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'nom/themes/default/default.css' %}" />
+{% endblock %}
+
 {% block content %}
 
     <div class="six columns alpha">
 	   <form id="data_form" action="" method="post" accept-charset="utf-8">
-            {{ form.as_p }}
+            <select id="estados" size="1"></select>
+            <select id="ciudades" size="1">
+            	<option value="0">Escoge una ciudad</option>
+            </select>
         
             <input class="button" type="button" value="Calcular" onclick="send_form();">
         </form>
+        <a href="#hidden-content" data-lightbox-gallery="gallery2">Inline HTML</a>
 
         <input type="text" value="5" id="a"> x
 		<input type="text" value="6" id="b"> =
 		<input type="text" value="" id="result">
 		<input type="button" value="Multiply!" onclick="calculate();">
+
+		<div id="hidden-content" style="display: none;">
+			<h2 style="margin-top: 0;">Inline HMTL</h2>
+			<p>This content is hidden on the page.</p>
+		</div>
     </div>
 
     <!--<p>Resultado {{ result }} </p>-->
@@ -24,4 +38,6 @@
 {% block jquerys %}
 <script src="{% static 'nom/js/main.js' %}"></script>
 <script src="{% static '/static/dajax/jquery.dajax.core.js' %}"></script>
+<script src="{% static 'nom/js/nivo-lightbox.js' %}"}></script>
+</script>
 {% endblock %}

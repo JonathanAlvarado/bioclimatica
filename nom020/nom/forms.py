@@ -18,35 +18,21 @@ class cityForm(forms.Form):
 	pisos = forms.ChoiceField( choices = pisos_choices, label  = "Total de pisos" )
 	
 	techo = forms.ChoiceField( choices = techo_choices, label = "Material techo" )
-	areaT = forms.CharField(label = "Área muro norte")
+	areaT = forms.FloatField(label = "Área techo", max_value = 9000)
 	
 	muroNorte = forms.ChoiceField( choices = muro_choices, label = "Material muro norte" )
-	areaN = forms.CharField(label = "Área muro norte")
+	areaN = forms.FloatField(label = "Área muro norte", max_value = 9000)
 	
 	muroSur = forms.ChoiceField( choices = muro_choices, label = "Material muro sur" )
-	areaS = forms.CharField(label = "Área muro sur")
+	areaS = forms.FloatField(label = "Área muro sur", max_value = 9000)
 	
 	muroEste = forms.ChoiceField( choices = muro_choices, label = "Material muro este" )
-	areaE = forms.CharField(label = "Área muro este")
+	areaE = forms.FloatField(label = "Área muro este", max_value = 9000)
 	
 	muroOeste = forms.ChoiceField( choices = muro_choices, label = "Material muro oeste" )
-	areaO = forms.CharField(label = "Área muro oeste")
+	areaO = forms.FloatField(label = "Área muro oeste", max_value = 9000)
 
 '''
-class ContactForm(forms.Form):
-	estados = ( 
-		edos = ciudades.objects.values('estado').distinct()
-    )
-
-	ciudades = (
-    	('Fresnillo','Fresnillo'),
-    )
-
-	soluciones = (
-    	('Ejemplo Muro','Ejemplo Muro'),
-    	('Ejemplo Losa', 'Ejemplo Losa'),
-    )
-
 	#solutions = [['muroNorte','Ejemplo Muro',20,'Muro Masivo'],['muroNorte','Ejemplo Muro',20,'Muro Masivo']]
 	#email = forms.EmailField(required=False)
 	#message = forms.CharField()'''

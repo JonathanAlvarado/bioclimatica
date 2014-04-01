@@ -1,11 +1,17 @@
 $( document ).ready(function() {
+	$('.six a').nivoLightbox({ effect: 'fade' });
 
-	$( "#id_estado" ).on('change', function() {
-		//alert($(this).val());
+	get_states();
+
+	$( "#estados" ).on('change', function() {
   		display_cities( $(this).val() );
   	});
   
 })
+
+function get_states(){
+	Dajaxice.nom.get_states( Dajax.process )
+}
 
 function display_cities(edo){
 	Dajaxice.nom.update_city( Dajax.process, {'option':edo} )
