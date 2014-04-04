@@ -4,17 +4,17 @@ from nom.models import estados, ciudades, soluciones, soluciones_detalles, ciuda
 from django.db.models import Q
 
 @dajaxice_register
-def multiply(request, a, b):
+def multiply( request, a, b ):
 	dajax = Dajax()
 	result = int(a) * int(b)
 	dajax.assign('#result','value',str(result))
 	return dajax.json()
 
 @dajaxice_register
-def get_states(request):
+def get_states( request ):
 	dajax = Dajax()
-	states = [['','Escoge un estado']]
-	states = [['', 'Escoge un estado'], ] + [ [state.id, state.estado] for state in estados.objects.all() ]
+	states = [[ '','Escoge un estado' ]]
+	states = [ [ '', 'Escoge un estado' ], ] + [ [ state.id, state.estado ] for state in estados.objects.all() ]
 	
 	options = []
 
@@ -26,13 +26,13 @@ def get_states(request):
 
 
 @dajaxice_register
-def update_city(request, option):
+def update_city( request, option ):
 	dajax = Dajax()
-	cities = [['','Escoge una ciudad']]
+	cities = [[ '','Escoge una ciudad' ]]
 	
 	for city in ciudades.objects.all():
 		if city.estado_id == int(option):
-			cities.append([city.id, city.ciudad])
+			cities.append([ city.id, city.ciudad ])
 	
 	options = []
 	
@@ -42,3 +42,37 @@ def update_city(request, option):
 	dajax.assign( '#ciudades', 'innerHTML', ''.join( options ) )
 	return dajax.json()
 
+@dajaxice_register
+def get_materials( request ):
+	dajax = Dajax()
+
+	#wall_sols = floor_sols = roof_sols = window_sols = [[ '','Escoge un material' ]]
+	wall_options  = [ "<option value='0'>Escoge un material</option>" ]
+	floor_options = [ "<option value='0'>Escoge un material</option>" ]
+	roof_options = [ "<option value='0'>Escoge un material</option>" ]
+	window_options = [ "<option value='0'>Escoge un material</option>" ]
+	options = []
+
+	for sol in soluciones.objects.all():
+		if sol.tipo == "muro":
+			#wall_sols.append([ sol.id, sol.nombre ])
+			wall_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
+		elif sol.tipo == "piso":
+			#floor_sols.append([ sol.id, sol.nombre ])
+			floor_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
+		elif sol.tipo == "techo":
+			#roof_sols.append([ sol.id, sol.nombre ])
+			roof_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
+		elif sol.tipo == "ventana":
+			#window_sols.append([ sol.id, sol.nombre ])
+			window_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
+
+	options.append( wall_options )
+	options.append( floor_options )
+	options.append( roof_options )
+	options.append( window_options )
+
+	dajax.add_data( options, 'ajax_table')
+	#dajax.add_data( data, callback_function)
+	#dajax.add_data(range(10), 'my_js_function')
+	return dajax.json()

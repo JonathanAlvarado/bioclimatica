@@ -4,6 +4,8 @@ $( document ).ready(function() {
 
 	get_states();
 
+	get_materials()
+
 	$( "#estados" ).on('change', function() {
   		display_cities( $(this).val() );
   	});
@@ -26,6 +28,14 @@ function calculate(){
 	Dajaxice.nom.multiply(Dajax.process,{'a':$('#a').val(),'b':$('#b').val()})
 }
 
+function get_materials(){
+	Dajaxice.nom.get_materials( Dajax.process )
+}
+
 function load_tables(){
 	$('.footable').footable();
+}
+
+function ajax_table(data){
+	alert(data[1]);
 }
