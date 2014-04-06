@@ -21,7 +21,7 @@ def get_states( request ):
 	for state in states:
 		options.append( "<option value='%s'>%s</option>" % ( state[0], state[1]) )
 
-	dajax.assign( '#estados', 'innerHTML', ''.join( options ) )
+	dajax.assign( '#states', 'innerHTML', ''.join( options ) )
 	return dajax.json()
 
 
@@ -39,14 +39,13 @@ def update_city( request, option ):
 	for city in cities:
 		options.append( "<option value='%s'>%s</option>" % ( city[0], city[1]) )
 
-	dajax.assign( '#ciudades', 'innerHTML', ''.join( options ) )
+	dajax.assign( '#cities', 'innerHTML', ''.join( options ) )
 	return dajax.json()
 
 @dajaxice_register
 def get_materials( request ):
 	dajax = Dajax()
 
-	#wall_sols = floor_sols = roof_sols = window_sols = [[ '','Escoge un material' ]]
 	wall_options  = [ "<option value='0'>Escoge un material</option>" ]
 	floor_options = [ "<option value='0'>Escoge un material</option>" ]
 	roof_options = [ "<option value='0'>Escoge un material</option>" ]
@@ -55,24 +54,21 @@ def get_materials( request ):
 
 	for sol in soluciones.objects.all():
 		if sol.tipo == "muro":
-			#wall_sols.append([ sol.id, sol.nombre ])
 			wall_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
 		elif sol.tipo == "piso":
-			#floor_sols.append([ sol.id, sol.nombre ])
 			floor_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
 		elif sol.tipo == "techo":
-			#roof_sols.append([ sol.id, sol.nombre ])
 			roof_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
 		elif sol.tipo == "ventana":
-			#window_sols.append([ sol.id, sol.nombre ])
 			window_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
 
-	options.append( wall_options )
+	'''options.append( wall_options )
 	options.append( floor_options )
 	options.append( roof_options )
 	options.append( window_options )
 
-	dajax.add_data( options, 'ajax_table')
+	dajax.add_data( options, 'ajax_table')'''
 	#dajax.add_data( data, callback_function)
 	#dajax.add_data(range(10), 'my_js_function')
+	dajax.assign( '#wall_mats', 'innerHTML', ''.join( wall_options ) )
 	return dajax.json()

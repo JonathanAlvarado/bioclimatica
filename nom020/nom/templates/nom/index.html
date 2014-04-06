@@ -4,36 +4,44 @@
 {% block title %}Tesis{% endblock %}
 
 {%block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'nom/nivo-lightbox.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'nom/themes/default/default.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'nom/footable.core.css' %}" />
 {% endblock %}
 
 {% block content %}
 
-    <div class="six columns alpha">
+    <div class="container">
 	   <form id="data_form" action="" method="post" accept-charset="utf-8">
-            <select id="estados" size="1"></select>
-            <select id="ciudades" size="1">
+            <select id="states" size="1"></select>
+            <select id="cities" size="1">
             	<option value="0">Escoge una ciudad</option>
             </select>
         
             <input class="button" type="button" value="Calcular" onclick="send_form();">
         </form>
-        <a href="#hidden-content" data-lightbox-gallery="gallery2">Inline HTML</a>
 
-        <input type="text" value="5" id="a"> x
+        <!--<input type="text" value="5" id="a"> x
 		<input type="text" value="6" id="b"> =
 		<input type="text" value="" id="result">
-		<input type="button" value="Multiply!" onclick="calculate();">
+		<input type="button" value="Multiply!" onclick="calculate();">-->
 
-		<div id="hidden-content" style="display: none;">
-			<table class="footable">
+			<select id="house_part" size="1" onchange="get_materials();">
+            	<option value="0">Escoge...</option>
+            	<option value="techo">Techo</option>
+            	<option value="ventana">Ventana</option>
+            	<option value="piso">Piso</option>
+            	<option value="muro">Pared</option>
+            </select>
+
+			<select id="wall_mats" size="1">
+            	<option value="0">Escoge un material</option>
+            </select>
+
+            <table class="footable">
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th data-hide="phone,tablet">Phone</th>
-						<th data-hide="phone,tablet">Email</th>
+						<th >Phone</th>
+						<th >Email</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -49,7 +57,7 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
+
     </div>
 
     <!--<p>Resultado {{ result }} </p>-->
@@ -58,6 +66,5 @@
 {% block jquerys %}
 <script src="{% static 'nom/js/main.js' %}"></script>
 <script src="{% static '/static/dajax/jquery.dajax.core.js' %}"></script>
-<script src="{% static 'nom/js/nivo-lightbox.js' %}"}></script>
 <script src="{% static 'nom/js/footable.js' %}"></script>
 {% endblock %}

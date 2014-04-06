@@ -1,15 +1,12 @@
 $( document ).ready(function() {
-	$('.six a').nivoLightbox({ effect: 'fade' });
 	load_tables();
 
 	get_states();
 
-	get_materials()
-
-	$( "#estados" ).on('change', function() {
+	$( "#states" ).on('change', function() {
   		display_cities( $(this).val() );
   	});
-  
+
 });
 
 function get_states(){
@@ -37,5 +34,5 @@ function load_tables(){
 }
 
 function ajax_table(data){
-	alert(data[1]);
+
 }
