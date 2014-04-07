@@ -36,3 +36,11 @@ function load_tables(){
 function ajax_table(data){
 
 }
+
+function submit_material(){
+	h_part = $('#house_part').val();
+	ubication = $('#ubication').val();
+	material = $('#material').val();
+	area = $('#area').val();
+	Dajaxice.nom.submit_material( Dajax.process,{ 'h_part':h_part, 'ubication':ubication, 'material':material, 'area'area } )
+}

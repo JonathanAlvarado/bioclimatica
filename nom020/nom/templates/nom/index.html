@@ -32,32 +32,36 @@
             	<option value="muro">Pared</option>
             </select>
 
-			<select id="wall_mats" size="1">
+            <select id="ubication" size="1" >
+            	<option value="0">Escoge...</option>
+            	<option value="techo">Pared norte</option>
+            	<option value="ventana">Pared este</option>
+            	<option value="piso">Pared sur</option>
+            	<option value="muro">Pared oeste</option>
+            </select>
+
+			<select id="material" size="1">
             	<option value="0">Escoge un material</option>
             </select>
+
+			<label for="area">Área</label>
+			<input type="number" id="area" maxlength="6" min="0.0000" max="100000"/>
+			<input class="button" type="button" value="Insertar" onclick="submit_material();"/>
 
             <table class="footable">
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th >Phone</th>
-						<th >Email</th>
+						<th>Material</th>
+						<th>Área</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td>Bob Builder</td>
 						<td>555-12345</td>
-						<td>bob@home.com</td>
-					</tr>
-					<tr>
-						<td>Bridget Jones</td>
-						<td>544-776655</td>
-						<td>bjones@mysite.com</td>
 					</tr>
 				</tbody>
 			</table>
-
     </div>
 
     <!--<p>Resultado {{ result }} </p>-->

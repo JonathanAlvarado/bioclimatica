@@ -70,5 +70,13 @@ def get_materials( request ):
 	dajax.add_data( options, 'ajax_table')'''
 	#dajax.add_data( data, callback_function)
 	#dajax.add_data(range(10), 'my_js_function')
-	dajax.assign( '#wall_mats', 'innerHTML', ''.join( wall_options ) )
+	dajax.assign( '#material', 'innerHTML', ''.join( wall_options ) )
+	return dajax.json()
+
+@dajaxice_register
+def submit_material( request ):
+	dajax = Dajax()
+
+	#dajax.add_data( data, callback_function)
+	#dajax.add_data(range(10), 'my_js_function')
 	return dajax.json()
