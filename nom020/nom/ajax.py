@@ -62,8 +62,7 @@ def get_materials( request, house_part ):
 			window_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
 
 	#dajax.add_data( options, 'ajax_table')
-	#dajax.add_data( data, callback_function)
-	#dajax.add_data(range(10), 'my_js_function')
+
 	if ( house_part == 'muro' ):
 		dajax.assign( '#material', 'innerHTML', ''.join( wall_options ) )
 	elif ( house_part == 'techo' ):
@@ -78,15 +77,21 @@ def get_materials( request, house_part ):
 @dajaxice_register
 def submit_material( request, h_part, ubication, material, area ):
 	dajax = Dajax()
-	user_materials = [h_part, ubication, material, area]
+	user_materials = [ h_part, ubication, material, area ]
 	materials =	[]
+	options = []
 	
-	'''if not request.session['materials']:
-		materials = request.session[ 'materials' ]
+	if request.session.get( 'materials' ):
+		materials = request.session.pop( 'materials' )
 		
 	materials.append( user_materials )
-	request.session['materials'] = materials'''
+	request.session['materials'] = materials
+
+	#for i in xrange(0, len(materials), 4):
+	for mat in materials:
+		options.append( "<tr><th>%s</th><th>%s</th><th>%s</th><th>%s</th></tr>" % ( mat[0], mat[1], mat[2], mat[3] ) )
+
 	#request.session['has_commented'] = True
 	#dajax.add_data( data, callback_function)
-	dajax.add_data( user_materials , 'ajax_table')
+	dajax.add_data( options , 'ajax_table')
 	return dajax.json()
