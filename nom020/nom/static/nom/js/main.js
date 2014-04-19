@@ -1,11 +1,15 @@
 $( document ).ready(function() {
-	load_tables();
+	/*load_tables();
 
 	get_states();
 
 	$( "#states" ).on('change', function() {
   		display_cities( $(this).val() );
   	});
+
+	$( "#house_part" ).on('change', function() {
+  		get_materials();
+  	});*/
 
 });
 
@@ -26,15 +30,13 @@ function calculate(){
 }
 
 function get_materials(){
-	Dajaxice.nom.get_materials( Dajax.process )
+	//alert( $('#house_part').val() );
+	alert('si');
+	//Dajaxice.nom.get_materials( Dajax.process, {'house_part:':$('#house_part').val()} )
 }
 
 function load_tables(){
 	$('.footable').footable();
-}
-
-function ajax_table(data){
-
 }
 
 function submit_material(){

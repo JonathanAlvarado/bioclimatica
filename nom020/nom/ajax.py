@@ -43,14 +43,13 @@ def update_city( request, option ):
 	return dajax.json()
 
 @dajaxice_register
-def get_materials( request ):
+def get_materials( request, house_part ):
 	dajax = Dajax()
 
 	wall_options  = [ "<option value='0'>Escoge un material</option>" ]
 	floor_options = [ "<option value='0'>Escoge un material</option>" ]
 	roof_options = [ "<option value='0'>Escoge un material</option>" ]
 	window_options = [ "<option value='0'>Escoge un material</option>" ]
-	options = []
 
 	for sol in soluciones.objects.all():
 		if sol.tipo == "muro":
@@ -62,21 +61,32 @@ def get_materials( request ):
 		elif sol.tipo == "ventana":
 			window_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
 
-	'''options.append( wall_options )
-	options.append( floor_options )
-	options.append( roof_options )
-	options.append( window_options )
-
-	dajax.add_data( options, 'ajax_table')'''
+	#dajax.add_data( options, 'ajax_table')
 	#dajax.add_data( data, callback_function)
 	#dajax.add_data(range(10), 'my_js_function')
-	dajax.assign( '#material', 'innerHTML', ''.join( wall_options ) )
+	if ( house_part == 'muro' ):
+		dajax.assign( '#material', 'innerHTML', ''.join( wall_options ) )
+	elif ( house_part == 'techo' ):
+		dajax.assign( '#material', 'innerHTML', ''.join( roof_options ) )
+	elif ( house_part == 'ventana' ):
+		dajax.assign( '#material', 'innerHTML', ''.join( window_options ) )
+	elif ( house_part == 'piso' ):
+		dajax.assign( '#material', 'innerHTML', ''.join( floor_options ) )
+
 	return dajax.json()
 
 @dajaxice_register
-def submit_material( request ):
+def submit_material( request, h_part, ubication, material, area ):
 	dajax = Dajax()
-
+	user_materials = [h_part, ubication, material, area]
+	materials =	[]
+	
+	'''if not request.session['materials']:
+		materials = request.session[ 'materials' ]
+		
+	materials.append( user_materials )
+	request.session['materials'] = materials'''
+	#request.session['has_commented'] = True
 	#dajax.add_data( data, callback_function)
-	#dajax.add_data(range(10), 'my_js_function')
+	dajax.add_data( user_materials , 'ajax_table')
 	return dajax.json()

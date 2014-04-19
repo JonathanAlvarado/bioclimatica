@@ -24,23 +24,23 @@
 		<input type="text" value="" id="result">
 		<input type="button" value="Multiply!" onclick="calculate();">-->
 
-			<select id="house_part" size="1" onchange="get_materials();">
-            	<option value="0">Escoge...</option>
-            	<option value="techo">Techo</option>
-            	<option value="ventana">Ventana</option>
-            	<option value="piso">Piso</option>
-            	<option value="muro">Pared</option>
-            </select>
+		<select id="house_part" size="1" onchange="get_materials();">
+			<option value="0">Escoge...</option>
+			<option value="techo">Techo</option>
+			<option value="ventana">Ventana</option>
+			<option value="piso">Piso</option>
+			<option value="muro">Pared</option>
+		</select>
 
             <select id="ubication" size="1" >
             	<option value="0">Escoge...</option>
-            	<option value="techo">Pared norte</option>
-            	<option value="ventana">Pared este</option>
-            	<option value="piso">Pared sur</option>
-            	<option value="muro">Pared oeste</option>
+            	<option value="pared_norte">Pared norte</option>
+            	<option value="pared_este">Pared este</option>
+            	<option value="pared_sur">Pared sur</option>
+            	<option value="pared_oeste">Pared oeste</option>
             </select>
 
-			<select id="material" size="1">
+			<select id="material" size="1" >
             	<option value="0">Escoge un material</option>
             </select>
 
@@ -68,7 +68,7 @@
 {% endblock %}
 
 {% block jquerys %}
-<script src="{% static 'nom/js/main.js' %}"></script>
+<script src="{% static 'nom/js/base.js' %}"></script>
 <script src="{% static '/static/dajax/jquery.dajax.core.js' %}"></script>
 <script src="{% static 'nom/js/footable.js' %}"></script>
 {% endblock %}
