@@ -3,12 +3,13 @@ from dajax.core import Dajax
 from nom.models import estados, ciudades, soluciones, soluciones_detalles, ciudades_k, ciudades_fg, ciudades_temp
 from django.db.models import Q
 
-@dajaxice_register
+'''@dajaxice_register
 def multiply( request, a, b ):
 	dajax = Dajax()
 	result = int(a) * int(b)
 	dajax.assign('#result','value',str(result))
-	return dajax.json()
+	return dajax.json()'''
+
 
 @dajaxice_register
 def get_states( request ):
@@ -30,6 +31,8 @@ def update_city( request, option ):
 	dajax = Dajax()
 	cities = [[ '','Escoge una ciudad' ]]
 	
+	request.session['state'] = int(option)
+
 	for city in ciudades.objects.all():
 		if city.estado_id == int(option):
 			cities.append([ city.id, city.ciudad ])
@@ -41,6 +44,7 @@ def update_city( request, option ):
 
 	dajax.assign( '#cities', 'innerHTML', ''.join( options ) )
 	return dajax.json()
+
 
 @dajaxice_register
 def get_materials( request, house_part ):
@@ -61,8 +65,6 @@ def get_materials( request, house_part ):
 		elif sol.tipo == "ventana":
 			window_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
 
-	#dajax.add_data( options, 'ajax_table')
-
 	if ( house_part == 'muro' ):
 		dajax.assign( '#material', 'innerHTML', ''.join( wall_options ) )
 	elif ( house_part == 'techo' ):
@@ -73,6 +75,7 @@ def get_materials( request, house_part ):
 		dajax.assign( '#material', 'innerHTML', ''.join( floor_options ) )
 
 	return dajax.json()
+
 
 @dajaxice_register
 def submit_material( request, h_part, ubication, material, area ):
@@ -87,11 +90,16 @@ def submit_material( request, h_part, ubication, material, area ):
 	materials.append( user_materials )
 	request.session['materials'] = materials
 
-	#for i in xrange(0, len(materials), 4):
 	for mat in materials:
-		options.append( "<tr><th>%s</th><th>%s</th><th>%s</th><th>%s</th></tr>" % ( mat[0], mat[1], mat[2], mat[3] ) )
+		nom_mat = soluciones.objects.get( id= int( mat[2] ) )
+		options.append( "<tr><th>%s</th><th>%s</th><th>%s</th><th>%s</th></tr>" % ( mat[0], mat[1], nom_mat.nombre, mat[3] ) )
 
-	#request.session['has_commented'] = True
 	#dajax.add_data( data, callback_function)
 	dajax.add_data( options , 'ajax_table')
 	return dajax.json()
+
+
+@dajaxice_register
+def calculate(request, city):
+	dajax = Dajax()
+	request.session['materials'] = int(city)

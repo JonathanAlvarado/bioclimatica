@@ -37,7 +37,6 @@ function submit_material(){
 }
 
 function ajax_table(data){
-	alert(data);
 	$('table tbody').append(data).trigger('footable_redraw');
 }
 
