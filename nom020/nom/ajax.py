@@ -92,14 +92,43 @@ def submit_material( request, h_part, ubication, material, area ):
 
 	for mat in materials:
 		nom_mat = soluciones.objects.get( id= int( mat[2] ) )
-		options.append( "<tr><th>%s</th><th>%s</th><th>%s</th><th>%s</th></tr>" % ( mat[0], mat[1], nom_mat.nombre, mat[3] ) )
+		options.append( "<tr><th>%s</th><th>%s</th><th>%s</th><th>%s m.</th></tr>" % ( mat[0], mat[1], nom_mat.nombre, mat[3] ) )
 
 	#dajax.add_data( data, callback_function)
 	dajax.add_data( options , 'ajax_table')
 	return dajax.json()
 
+def get_k(city, floors):
+	k_city = ciudades_k.objects.get( ciudad_id = city )
+
+	if(floors <= 3):
+		k_roof = k_city.kref_3niv
+		k_wall = k_city.kref_3niv
+
+	elif(floors > 3):
+		k_roof = k_city.kref_mas3niv_techo
+		k_wall = k_city.kref_mas3niv_pared
+
+	return k_roof,k_wall
+
 
 @dajaxice_register
-def calculate(request, city):
+def calculate(request, city, floors):
 	dajax = Dajax()
-	request.session['materials'] = int(city)
+	state = request.session.get( 'state' )
+	city = int(city)
+	floors = int(floors)
+	request.session['materials'] = city
+	request.session['floors'] = floors
+
+	fcRef = 0.1
+    cgsRef = 1
+    kGlobalV = 5.319
+    areaTecho = areaMN = areaMS = areaME = areaMO = areaPV = 0, 0, 0, 0, 0, 0
+    ganCalTechoProy=0
+    ganRadVentTechoProy = ganRadVentNProy = ganRadVentSProy = ganRadVentEProy = ganRadVentOProy = ganCalTechoRef = 0, 0, 0, 0, 0, 0
+    coConduc = 0
+    ganCalMNProy = ganCalMNRef = ganCalMEProy = ganCalMERef = ganCalMSProy = ganCalMSRef = ganCalMOProy = ganCalMPisoProy = ganCalMORef = 0, 0, 0, 0, 0, 0, 0, 0, 0
+    ganRadVentTechoRef = ganRadVentNRef = ganRadVentERef = ganRadVentSRef = ganRadVentORef = 0, 0, 0, 0, 0
+
+    k = get_k( city, floors )
