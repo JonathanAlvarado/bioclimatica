@@ -33,13 +33,17 @@ function submit_material(){
 	ubication = $('#ubication').val();
 	material = $('#material').val();
 	area = $('#area').val();
-	Dajaxice.nom.submit_material( Dajax.process,{ 'h_part':h_part, 'ubication':ubication, 'material':material, 'area':area } )
+	Dajaxice.nom.submit_material( Dajax.process, { 'h_part':h_part, 'ubication':ubication, 'material':material, 'area':area } )
 }
 
 function ajax_table(data){
 	$('table tbody').append(data).trigger('footable_redraw');
 }
 
-/*function send_form(){
-    Dajaxice.nom.send_form(Dajax.process,{'form':$('#data_form').serialize(true)});
-}*/
+function send_form(){
+    Dajaxice.nom.calculate( Dajax.process, { 'city':$('#cities').val(), 'floors':$('#floors').val() } );
+}
+
+function result(data){
+	alert(data)
+}

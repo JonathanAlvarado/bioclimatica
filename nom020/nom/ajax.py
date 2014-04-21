@@ -116,19 +116,37 @@ def get_k(city, floors):
 def calculate(request, city, floors):
 	dajax = Dajax()
 	state = request.session.get( 'state' )
+	materials = request.session.get( 'materials' )
 	city = int(city)
 	floors = int(floors)
-	request.session['materials'] = city
+	request.session['city'] = city
 	request.session['floors'] = floors
 
 	fcRef = 0.1
-    cgsRef = 1
-    kGlobalV = 5.319
-    areaTecho = areaMN = areaMS = areaME = areaMO = areaPV = 0, 0, 0, 0, 0, 0
-    ganCalTechoProy=0
-    ganRadVentTechoProy = ganRadVentNProy = ganRadVentSProy = ganRadVentEProy = ganRadVentOProy = ganCalTechoRef = 0, 0, 0, 0, 0, 0
-    coConduc = 0
-    ganCalMNProy = ganCalMNRef = ganCalMEProy = ganCalMERef = ganCalMSProy = ganCalMSRef = ganCalMOProy = ganCalMPisoProy = ganCalMORef = 0, 0, 0, 0, 0, 0, 0, 0, 0
-    ganRadVentTechoRef = ganRadVentNRef = ganRadVentERef = ganRadVentSRef = ganRadVentORef = 0, 0, 0, 0, 0
+	cgsRef = 1
+	kGlobalV = 5.319
+	areaTecho = areaMN = areaMS = areaME = areaMO = areaPV = 0
+	ganCalTechoProy=0
+	ganRadVentTechoProy = ganRadVentNProy = ganRadVentSProy = ganRadVentEProy = ganRadVentOProy = ganCalTechoRef = 0
+	coConduc = 0
+	ganCalMNProy = ganCalMNRef = ganCalMEProy = ganCalMERef = ganCalMSProy = ganCalMSRef = ganCalMOProy = ganCalMPisoProy = ganCalMORef = 0
+	ganRadVentTechoRef = ganRadVentNRef = ganRadVentERef = ganRadVentSRef = ganRadVentORef = 0
 
-    k = get_k( city, floors )
+	k = get_k( city, floors )
+
+	for mat in materials:
+		if mat[1] == 'techo':
+			areaTecho += int( mat[3] )
+		elif mat[1] == 'norte':
+			areaMN += int( mat[3] )
+		elif mat[1] == 'sur':
+			areaMS += int( mat[3] )
+		elif mat[1] == 'este':
+			areaME += int( mat[3] )
+		elif mat[1] == 'oeste':
+			areaMO += int( mat[3] )
+		elif mat[1] == 'piso':
+			areaPV += int( mat[3] )
+
+	dajax.add_data( areaMN , 'result')
+	return dajax.json()
