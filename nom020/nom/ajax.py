@@ -211,5 +211,41 @@ def calculate(request, city, floors):
 			elif mat_details.tipo_porcion == "muro ligero":
 				ganCalMOProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_mlO - city_details.temp_int ) )
 
-	dajax.add_data( ganCalMOProy , 'result')
+
+	ganRadVentTechoRef += ( cgsRef * areaTecho * (0) * city_fg.fgtd )
+	ganCalTechoRef += ( k[0] * areaTecho * ( 1 - (0) ) * ( city_details.temp_techo - city_details.temp_int ) )
+	coConducTecho = ganCalTechoProy - ganCalTechoRef
+
+	ganRadVentNRef += ( cgsRef * areaMN * ( fcRef ) * city_fg.fg_mN )
+	ganCalMNRef += ( k[1] * areaMN * (1 - ( fcRef )) * ( city_details.temp_mmN - city_details.temp_int ) )
+	ganCalVentNRef = k[0] * areaMN * (fcRef) * ( city_details.temp_ventN - city_details.temp_int )
+	coConducMN = ganCalMNProy - ganCalMNRef
+
+	ganRadVentERef += ( cgsRef * areaME * ( fcRef ) * city_fg.fg_mE )
+	ganCalMERef += ( k[1] * areaME * (1 - ( fcRef ) ) * ( city_details.temp_mmE - city_details.temp_int ) )
+	ganCalVentERef = k[0] * areaME * ( fcRef ) * (city_details.temp_ventE - city_details.temp_int )
+
+	ganRadVentSRef += ( cgsRef * areaMS * ( fcRef ) * city_fg.fg_mS )
+	ganCalMSRef += ( k[1] * areaMS * (1 - ( fcRef ) ) * ( city_details.temp_mmS - city_details.temp_int ) )
+	ganCalVentSRef = k[0] * areaMS * ( fcRef ) * ( city_details.temp_ventS - city_details.temp_int )
+
+	ganRadVentORef += ( cgsRef * areaMO * ( fcRef ) * city_fg.fg_mO );
+	ganCalMORef += ( k[1] * areaMO * (1 - ( fcRef ) ) * ( city_details.temp_mmO - city_details.temp_int ) )
+	ganCalVentORef = k[0] * areaMO * ( fcRef ) * ( city_details.temp_ventO - city_details.temp_int )
+
+	ganRadTotRef = ganRadVentNRef + ganRadVentERef + ganRadVentORef + ganRadVentSRef + ganRadVentTechoRef
+	ganRadTotProy = ganRadVentNProy + ganRadVentEProy + ganRadVentOProy + ganRadVentSProy + ganRadVentTechoProy
+
+	ganCalTotMuroRef = ganCalMNRef + ganCalMERef + ganCalMORef + ganCalMSRef + ganCalTechoRef + ganCalVentNRef + ganCalVentERef + ganCalVentORef + ganCalVentSRef
+	ganCalTotMuroProy = ganCalMNProy + ganCalMEProy + ganCalMOProy + ganCalMSProy + ganCalTechoProy
+
+	ganCalTotCondProy = ganCalTotMuroProy
+
+	ganCalTotMuroRef = ganCalTotMuroRef + ganRadTotRef
+	ganCalTotMuroProy = ganCalTotMuroProy + ganRadTotProy
+
+	ganCalPorcentaje = ( ganCalTotMuroRef - ganCalTotMuroProy) / (ganCalTotMuroRef * -1)
+
+
+	dajax.add_data( ganCalPorcentaje * 100 , 'result')
 	return dajax.json()
