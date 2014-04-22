@@ -164,5 +164,52 @@ def calculate(request, city, floors):
 
 				ganRadVentTechoProy += ( mat_details.coeficiente_sombreado * int( materials[i][3] ) * city_fg.fgtd - mat_details.se )
 
-	dajax.add_data( ganCalTechoProy , 'result')
+		elif materials[i][1] == "norte":
+			if mat_details.tipo_porcion == "ventana":
+				ganCalMNProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_ventN - city_details.temp_int ) )
+
+				ganRadVentNProy += ( mat_details.coeficiente_sombreado * int( materials[i][3] ) * city_fg.fg_mN * mat_details.se )
+			elif mat_details.tipo_porcion == "muro masivo":
+				ganCalMNProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_mmN - city_details.temp_int ) )
+
+			elif mat_details.tipo_porcion == "muro ligero":
+				ganCalMNProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_mlN - city_details.temp_int ) )
+
+		elif materials[i][1] == "este":
+			if mat_details.tipo_porcion == "ventana":
+				ganCalMEProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_ventE - city_details.temp_int ) )
+
+				ganRadVentEProy += ( mat_details.coeficiente_sombreado * int( materials[i][3] ) * city_fg.fg_mE * mat_details.se )
+            
+			elif mat_details.tipo_porcion == "muro masivo":
+				ganCalMEProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_mmE - city_details.temp_int ) )
+
+			elif mat_details.tipo_porcion == "muro ligero":
+				ganCalMEProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_mlE - city_details.temp_int ) )
+
+		elif materials[i][1] == "sur":
+			if mat_details.tipo_porcion == "ventana":
+				ganCalMSProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_ventS - city_details.temp_int ) )
+
+				ganRadVentSProy += ( mat_details.coeficiente_sombreado * int( materials[i][3] ) * city_fg.fg_mS * mat_details.se )
+
+			elif mat_details.tipo_porcion == "muro masivo":
+				ganCalMSProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_mmS - city_details.temp_int ) )
+
+			elif mat_details.tipo_porcion == "muro ligero":
+				ganCalMSProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_mlS - city_details.temp_int ) )
+
+		elif materials[i][1] == "oeste":
+			if mat_details.tipo_porcion == "ventana":
+				ganCalMOProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_ventO - city_details.temp_int ) )
+
+				ganRadVentOProy += ( mat_details.coeficiente_sombreado * int( materials[i][3] ) * city_fg.fg_mO * mat_details.se )
+
+			elif mat_details.tipo_porcion == "muro masivo":
+				ganCalMOProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_mmO - city_details.temp_int ) )
+
+			elif mat_details.tipo_porcion == "muro ligero":
+				ganCalMOProy += ( (1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_mlO - city_details.temp_int ) )
+
+	dajax.add_data( ganCalMOProy , 'result')
 	return dajax.json()
