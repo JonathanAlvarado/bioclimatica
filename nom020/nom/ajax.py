@@ -126,13 +126,15 @@ def calculate(request, city, floors):
 	cgsRef = 1
 	kGlobalV = 5.319
 	areaTecho = areaMN = areaMS = areaME = areaMO = areaPV = 0
-	ganCalTechoProy=0
+	ganCalTechoProy = 0
 	ganRadVentTechoProy = ganRadVentNProy = ganRadVentSProy = ganRadVentEProy = ganRadVentOProy = ganCalTechoRef = 0
 	coConduc = 0
 	ganCalMNProy = ganCalMNRef = ganCalMEProy = ganCalMERef = ganCalMSProy = ganCalMSRef = ganCalMOProy = ganCalMPisoProy = ganCalMORef = 0
 	ganRadVentTechoRef = ganRadVentNRef = ganRadVentERef = ganRadVentSRef = ganRadVentORef = 0
 
 	k = get_k( city, floors )
+	city_details = ciudades_temp.objects.get( ciudad_id = city )
+	city_fg = ciudades_fg.objects.get( ciudad_id = city )
 
 	for mat in materials:
 		if mat[1] == 'techo':
@@ -147,6 +149,20 @@ def calculate(request, city, floors):
 			areaMO += int( mat[3] )
 		elif mat[1] == 'piso':
 			areaPV += int( mat[3] )
+	
+	#solutions = [['muroNorte','Ejemplo Muro',20,'Muro Masivo'],['muroNorte','Ejemplo Muro',20,'Muro Masivo']]
+	for i in xrange( len(materials) ):
+		mat_details = soluciones_detalles.objects.get( solucion_id = materials[i][2] )
+		
+		if materials[i][1] == "techo": #ubication -> techo
+			if mat_details.tipo_porcion == "superficie inferior":
+				ganCalTechoProy += ( ( 1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_sup_int - city_details.temp_int ) )
+			elif mat_details.tipo_porcion == "techo":
+				ganCalTechoProy += ( ( 1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_techo - city_details.temp_int ) )
+			elif mat_details.tipo_porcion == "domo":
+				ganCalTechoProy += ( ( 1 / mat_details.valorR ) * int( materials[i][3] ) * ( city_details.temp_trluz_domo - city_details.temp_int ) )
 
-	dajax.add_data( areaMN , 'result')
+				ganRadVentTechoProy += ( mat_details.coeficiente_sombreado * int( materials[i][3] ) * city_fg.fgtd - mat_details.se )
+
+	dajax.add_data( ganCalTechoProy , 'result')
 	return dajax.json()
