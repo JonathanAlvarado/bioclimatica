@@ -1,24 +1,20 @@
 $( document ).ready(function() {
-	/*load_tables();
+	alert('si');
+	load_tables();
 
-	get_states();
+	$( "#id_state" ).on('change', function() {
+		display_cities( $(this).val() );
+	});
 
-	$( "#states" ).on('change', function() {
-  		display_cities( $(this).val() );
-  	});
-
-	$( "#house_part" ).on('change', function() {
-  		get_materials();
-  	});*/
+	/*$( "#house_part" ).on('change', function() {
+		get_materials();
+	});*/
 
 });
 
-function get_states(){
-	Dajaxice.nom.get_states( Dajax.process )
-}
-
 function display_cities(edo){
-	Dajaxice.nom.update_city( Dajax.process, {'option':edo} )
+	alert(edo);
+	//Dajaxice.nom.update_city( Dajax.process, {'option':edo} )
 }
 
 /*function send_form(){
@@ -31,7 +27,6 @@ function calculate(){
 
 function get_materials(){
 	//alert( $('#house_part').val() );
-	alert('si');
 	//Dajaxice.nom.get_materials( Dajax.process, {'house_part:':$('#house_part').val()} )
 }
 
