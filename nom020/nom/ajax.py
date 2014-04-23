@@ -1,7 +1,7 @@
 from dajaxice.decorators import dajaxice_register
 from dajax.core import Dajax
 from nom.models import estados, ciudades, soluciones, soluciones_detalles, ciudades_k, ciudades_fg, ciudades_temp
-from django.db.models import Q
+#from django.db.models import Q
 
 '''@dajaxice_register
 def multiply( request, a, b ):
@@ -42,7 +42,33 @@ def update_city( request, option ):
 	for city in cities:
 		options.append( "<option value='%s'>%s</option>" % ( city[0], city[1]) )
 
-	dajax.assign( '#cities', 'innerHTML', ''.join( options ) )
+	#dajax.assign( '#cities', 'innerHTML', ''.join( options ) )
+	dajax.assign( '#id_city', 'innerHTML', ''.join( options ) )
+	return dajax.json()
+
+
+@dajaxice_register
+def get_ubication( request, hpart):
+	dajax = Dajax()
+	ubications = ( ['0', 'Escoge...'], [ 'norte','Pared norte' ], 
+		[ 'sur','Pared sur' ], [ 'este','Pared este' ], 
+		[ 'oeste','Pared oeste' ] 
+	)
+	options = []
+
+	if ( hpart == 'techo' ):
+		options.append( "<option value='%s'>%s</option>" % ( '0' , 'Escoge...' ) )
+		options.append( "<option value='%s'>%s</option>" % ( 'techo' , 'Techo' ) )
+
+	elif ( hpart == 'ventana') or (hpart == 'pared' ):
+		for ub in ubications:
+			options.append( "<option value='%s'>%s</option>" % ( ub[0], ub[1]) )
+
+	elif ( hpart == 'piso' ):
+		options.append( "<option value='%s'>%s</option>" % ( '0' , 'Escoge...' ) )
+		options.append( "<option value='%s'>%s</option>" % ( 'piso' , 'Piso' ) )
+
+	dajax.assign( '#id_ubication', 'innerHTML', ''.join( options ) )
 	return dajax.json()
 
 
@@ -66,13 +92,13 @@ def get_materials( request, house_part ):
 			window_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
 
 	if ( house_part == 'muro' ):
-		dajax.assign( '#material', 'innerHTML', ''.join( wall_options ) )
+		dajax.assign( '#id_material', 'innerHTML', ''.join( wall_options ) )
 	elif ( house_part == 'techo' ):
-		dajax.assign( '#material', 'innerHTML', ''.join( roof_options ) )
+		dajax.assign( '#id_material', 'innerHTML', ''.join( roof_options ) )
 	elif ( house_part == 'ventana' ):
-		dajax.assign( '#material', 'innerHTML', ''.join( window_options ) )
+		dajax.assign( '#id_material', 'innerHTML', ''.join( window_options ) )
 	elif ( house_part == 'piso' ):
-		dajax.assign( '#material', 'innerHTML', ''.join( floor_options ) )
+		dajax.assign( '#id_material', 'innerHTML', ''.join( floor_options ) )
 
 	return dajax.json()
 

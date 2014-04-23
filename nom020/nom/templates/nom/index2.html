@@ -1,0 +1,48 @@
+{% extends "nom/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Tesis{% endblock %}
+
+{%block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'nom/footable.core.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+	   <form id="data_form" action="" method="post" accept-charset="utf-8">
+            {{ form.as_p }}
+
+            <input class="button" type="button" value="Calcular" onclick="send_form();">
+        </form>
+
+        <!--<input type="text" value="5" id="a"> x
+		<input type="text" value="6" id="b"> =
+		<input type="text" value="" id="result">
+		<input type="button" value="Multiply!" onclick="calculate();">-->
+
+		<input class="button" type="button" value="Insertar" onclick="submit_material();"/>
+
+		<table class="footable">
+			<thead>
+				<tr>
+					<th>Pared</th>
+					<th>Ubicacion</th>
+					<th>Material</th>
+					<th>Area</th>
+				</tr>
+			</thead>
+			<tbody>
+					
+			</tbody>
+		</table>
+    </div>
+
+	<p>Resultado {{ result }} </p>
+{% endblock %}
+
+{% block jquerys %}
+<script src="{% static 'nom/js/main.js' %}"></script>
+<script src="{% static '/static/dajax/jquery.dajax.core.js' %}"></script>
+<script src="{% static 'nom/js/footable.js' %}"></script>
+{% endblock %}

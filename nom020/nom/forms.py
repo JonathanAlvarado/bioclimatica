@@ -3,34 +3,28 @@ from django import forms
 from django.db.models import Q
 from nom.models import soluciones, estados, ciudades
 
-class cityForm(forms.Form):
-	estado_choices = [('', 'Escoge un estado'), ] + [(edo.id, edo.estado) for edo in estados.objects.all()]
-	techo_choices = [('', 'Escoge un material'), ] + [(sol.id, sol.nombre) for sol in soluciones.objects.filter(tipo="techo")]
-	muro_choices = [('', 'Escoge un material'), ] + [(sol.id, sol.nombre) for sol in soluciones.objects.filter( Q(tipo="muro") | Q(tipo="ventana") | Q(tipo="piso") )]
-	pisos_choices = ( 
-		('0', 'Pisos de la construcción'),
-    	('1', '1 a 3 pisos'),
-    	('2', 'Más de 3 pisos'),
+class data_form(forms.Form):
+	state_choices = [ ('0', 'Escoge un estado'), ] + [(edo.id, edo.estado) for edo in estados.objects.all()]
+	city_choices = [ ('0', 'Escoge una ciudad') ]
+	#techo_choices = [('', 'Escoge un material'), ] + [(sol.id, sol.nombre) for sol in soluciones.objects.filter(tipo="techo")]
+	#muro_choices = [('', 'Escoge un material'), ] + [(sol.id, sol.nombre) for sol in soluciones.objects.filter( Q(tipo="muro") | Q(tipo="ventana") | Q(tipo="piso") )]
+	nfloor_choices = ( 
+		('0', 'Pisos de la construcción'), ('1', '1 a 3 pisos'),
+    	('4', 'Más de 3 pisos'),
     )
-	
-	estado = forms.ChoiceField( choices = estado_choices )
-	ciudad = forms.ChoiceField([('0','Escoge una ciudad')])
-	pisos = forms.ChoiceField( choices = pisos_choices, label  = "Total de pisos" )
-	
-	techo = forms.ChoiceField( choices = techo_choices, label = "Material techo" )
-	areaT = forms.FloatField(label = "Área techo", max_value = 9000)
-	
-	muroNorte = forms.ChoiceField( choices = muro_choices, label = "Material muro norte" )
-	areaN = forms.FloatField(label = "Área muro norte", max_value = 9000)
-	
-	muroSur = forms.ChoiceField( choices = muro_choices, label = "Material muro sur" )
-	areaS = forms.FloatField(label = "Área muro sur", max_value = 9000)
-	
-	muroEste = forms.ChoiceField( choices = muro_choices, label = "Material muro este" )
-	areaE = forms.FloatField(label = "Área muro este", max_value = 9000)
-	
-	muroOeste = forms.ChoiceField( choices = muro_choices, label = "Material muro oeste" )
-	areaO = forms.FloatField(label = "Área muro oeste", max_value = 9000)
+	house_part_choices = [ ('0', 'Parte de la casa') ,('techo', 'Techo'), 
+		('ventana', 'Ventana'), ('piso', 'Piso'), ('pared', 'Pared'),
+    ]
+	ubication_choices = [ ('0', 'Escoge...') ]
+	material_choices = [ ('0', 'Escoge un material') ]
+
+	state = forms.ChoiceField( choices = state_choices, label = 'Estado' )
+	city = forms.ChoiceField( choices = city_choices, label = 'Ciudad' )
+	nfloor = forms.ChoiceField( choices = nfloor_choices, label  = 'Total de pisos' )
+	house_part = forms.ChoiceField( choices = house_part_choices, label = 'Parte de la casa' )
+	ubication = forms.ChoiceField( choices = ubication_choices, label = 'Ubicación' )
+	material = forms.ChoiceField( choices = material_choices, label = 'Material' )
+	area = forms.FloatField(label = "Área", max_value = 9000)
 
 '''
 	#solutions = [['muroNorte','Ejemplo Muro',20,'Muro Masivo'],['muroNorte','Ejemplo Muro',20,'Muro Masivo']]

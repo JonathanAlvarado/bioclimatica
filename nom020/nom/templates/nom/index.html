@@ -39,40 +39,41 @@
 			<option value="muro">Pared</option>
 		</select>
 
-            <select id="ubication" size="1" >
-            	<option value="0">Escoge...</option>
-            	<option value="norte">Pared norte</option>
-            	<option value="este">Pared este</option>
-            	<option value="sur">Pared sur</option>
-            	<option value="oeste">Pared oeste</option>
-            	<option value="techo">Techo</option>
-            	<option value="piso">Piso</option>
-            </select>
+		<select id="ubication" size="1" >
+			<option value="0">Escoge...</option>
+			<option value="norte">Pared norte</option>
+			<option value="este">Pared este</option>
+			<option value="sur">Pared sur</option>
+			<option value="oeste">Pared oeste</option>
+			<option value="techo">Techo</option>
+			<option value="piso">Piso</option>
+		</select>
 
-			<select id="material" size="1" >
-            	<option value="0">Escoge un material</option>
-            </select>
+		<select id="material" size="1" >
+			<option value="0">Escoge un material</option>
+		</select>
 
-			<label for="area">Área</label>
-			<input type="number" id="area" maxlength="6" min="0.0000" max="100000"/>
-			<input class="button" type="button" value="Insertar" onclick="submit_material();"/>
+		<label for="area">Área</label>
+		<input type="number" id="area" maxlength="6" min="0.0000" max="100000"/>
+		<input class="button" type="button" value="Insertar" onclick="submit_material();"/>
 
-            <table class="footable">
-				<thead>
-					<tr>
-						<th>Pared</th>
-						<th>Ubicacion</th>
-						<th>Material</th>
-						<th>Area</th>
-					</tr>
-				</thead>
-				<tbody>
+		<table class="footable">
+			<thead>
+				<tr>
+					<th>Pared</th>
+					<th>Ubicacion</th>
+					<th>Material</th>
+					<th>Area</th>
+				</tr>
+			</thead>
+			<tbody>
 					
-				</tbody>
-			</table>
+			</tbody>
+		</table>
     </div>
 
     <!--<p>Resultado {{ result }} </p>-->
+    <p>Eficiente en un --</p>
 {% endblock %}
 
 {% block jquerys %}

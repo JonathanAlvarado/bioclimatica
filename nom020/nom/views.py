@@ -1,14 +1,16 @@
 from django.shortcuts import render
 from nom.models import soluciones, ciudades, estados
-from forms import cityForm
+from forms import data_form
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
-	sol = soluciones.objects.all()
-	edos = estados.objects.values('estado').distinct()
-	form = cityForm()
 	#context = {'title':'prueba', 'content':'prueba', 'solucion': sol, 'estados': edos }
-	context = {'title':'prueba', 'form':form}
-	return render(request, 'nom/index.html', context)
+	context = {'title':'prueba'}
+	return render( request, 'nom/index.html', context )
+
+def index2(request):
+	form = data_form()
+	context = {'title':'prueba', 'form':form, 'result': '--'}
+	return render( request, 'nom/index2.html', context )
