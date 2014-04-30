@@ -6,6 +6,7 @@ $( document ).ready(function() {
 	$( "#states" ).on('change', function() {
   		display_cities( $(this).val() );
   	});
+
 });
 
 /*function calculate(){
@@ -21,11 +22,12 @@ function get_states(){
 }
 
 function display_cities(edo){
-	Dajaxice.nom.update_city( Dajax.process, {'option':edo} )
+	Dajaxice.nom.update_city( Dajax.process, { 'option':edo } )
 }
 
-function get_materials(){
-	Dajaxice.nom.get_materials( Dajax.process, {'house_part':$('#house_part').val()} )
+function get_ubication(){
+	Dajaxice.nom.get_ubication( Dajax.process, { 'hpart':$('#house_part').val() } )
+	Dajaxice.nom.get_materials( Dajax.process, { 'house_part':$('#house_part').val() } )
 }
 
 function submit_material(){
@@ -45,5 +47,6 @@ function send_form(){
 }
 
 function result(data){
-	alert(data)
+	alert(data);
+	$( "#result" ).html( "Eficiente en un "+data );
 }

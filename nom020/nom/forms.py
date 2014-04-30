@@ -20,11 +20,11 @@ class data_form(forms.Form):
 
 	state = forms.ChoiceField( choices = state_choices, label = 'Estado' )
 	city = forms.ChoiceField( choices = city_choices, label = 'Ciudad' )
-	nfloor = forms.ChoiceField( choices = nfloor_choices, label  = 'Total de pisos' )
-	house_part = forms.ChoiceField( choices = house_part_choices, label = 'Parte de la casa' )
-	ubication = forms.ChoiceField( choices = ubication_choices, label = 'Ubicación' )
-	material = forms.ChoiceField( choices = material_choices, label = 'Material' )
-	area = forms.FloatField(label = "Área", max_value = 9000)
+	#nfloor = forms.ChoiceField( choices = nfloor_choices, label  = 'Total de pisos' )
+	#house_part = forms.ChoiceField( choices = house_part_choices, label = 'Parte de la casa' )
+	#ubication = forms.ChoiceField( choices = ubication_choices, label = 'Ubicación' )
+	#material = forms.ChoiceField( choices = material_choices, label = 'Material' )
+	#area = forms.FloatField(label = "Área", max_value = 9000)
 
 '''
 	#solutions = [['muroNorte','Ejemplo Muro',20,'Muro Masivo'],['muroNorte','Ejemplo Muro',20,'Muro Masivo']]

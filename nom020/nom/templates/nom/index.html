@@ -11,19 +11,52 @@
 
     <div class="container">
 	   <form id="data_form" action="" method="post" accept-charset="utf-8">
-            <select id="states" size="1"></select>
+	   		<label for="states">Estado</label>
+            <select id="states" size="1" name="state"></select>
 
-            <select id="cities" size="1">
+            <label for="cities">Ciudad</label>
+            <select id="cities" size="1" name="city">
             	<option value="0">Escoge una ciudad</option>
             </select>
 
-        	<select id="floors" size="1">
+            <label for="floors">Total de pisos</label>
+        	<select id="floors" size="1" name="nfloors">
             	<option value="0">Total de pisos</option>
             	<option value="1">1 a 3 pisos</option>
             	<option value="4">Más de 3 pisos</option>
             </select>
 
-            <input class="button" type="button" value="Calcular" onclick="send_form();">
+            <label for="house_part">Parte de la casa</label>
+			<select id="house_part" size="1" name="house_part" onchange="get_ubication();">
+				<option value="0">Escoge...</option>
+				<option value="techo">Techo</option>
+				<option value="ventana">Ventana</option>
+				<option value="piso">Piso</option>
+				<option value="muro">Pared</option>
+			</select>
+
+			<label for="ubication">Ubicación</label>
+			<select id="ubication" size="1" >
+				<option value="0">Escoge...</option>
+				<option value="norte">Pared norte</option>
+				<option value="este">Pared este</option>
+				<option value="sur">Pared sur</option>
+				<option value="oeste">Pared oeste</option>
+				<option value="techo">Techo</option>
+				<option value="piso">Piso</option>
+			</select>
+
+			<label for="material">Material</label>
+			<select id="material" size="1" name="material">
+				<option value="0">Escoge un material</option>
+			</select>
+
+			<label for="area">Área</label>
+			<input type="number" id="area" name="area" maxlength="6" min="0.0000" max="100000"/> <br/>
+
+			<input class="button" type="button" value="Insertar" onclick="submit_material();"/>
+
+            <input class="button" type="button" value="Calcular" onclick="send_form();"/>
         </form>
 
         <!--<input type="text" value="5" id="a"> x
@@ -31,39 +64,13 @@
 		<input type="text" value="" id="result">
 		<input type="button" value="Multiply!" onclick="calculate();">-->
 
-		<select id="house_part" size="1" onchange="get_materials();">
-			<option value="0">Escoge...</option>
-			<option value="techo">Techo</option>
-			<option value="ventana">Ventana</option>
-			<option value="piso">Piso</option>
-			<option value="muro">Pared</option>
-		</select>
-
-		<select id="ubication" size="1" >
-			<option value="0">Escoge...</option>
-			<option value="norte">Pared norte</option>
-			<option value="este">Pared este</option>
-			<option value="sur">Pared sur</option>
-			<option value="oeste">Pared oeste</option>
-			<option value="techo">Techo</option>
-			<option value="piso">Piso</option>
-		</select>
-
-		<select id="material" size="1" >
-			<option value="0">Escoge un material</option>
-		</select>
-
-		<label for="area">Área</label>
-		<input type="number" id="area" maxlength="6" min="0.0000" max="100000"/>
-		<input class="button" type="button" value="Insertar" onclick="submit_material();"/>
-
 		<table class="footable">
 			<thead>
 				<tr>
 					<th>Pared</th>
-					<th>Ubicacion</th>
+					<th>Ubicación</th>
 					<th>Material</th>
-					<th>Area</th>
+					<th>Área</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -71,9 +78,8 @@
 			</tbody>
 		</table>
     </div>
-
-    <!--<p>Resultado {{ result }} </p>-->
-    <p>Eficiente en un --</p>
+    <br/><br/>
+    <p id="result">Eficiente en un --</p>
 {% endblock %}
 
 {% block jquerys %}

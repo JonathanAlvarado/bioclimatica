@@ -37,8 +37,9 @@ function ajax_table(data){
 }
 
 function send_form(){
-	Dajaxice.nom.calculate( Dajax.process, { 'city':$('#id_city').val(), 'floors':$('#id_nfloor').val() } );
-}
+	//Dajaxice.nom.calculate( Dajax.process, { 'city':$('#id_city').val(), 'floors':$('#id_nfloor').val() } );
+	Dajaxice.nom.calculate( Dajax.process, { 'form':$('#data_form').serialize(true) } );
+}	
 
 function result(data){
 	alert(data)

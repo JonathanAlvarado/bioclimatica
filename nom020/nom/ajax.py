@@ -1,6 +1,7 @@
 from dajaxice.decorators import dajaxice_register
 from dajax.core import Dajax
-from nom.models import estados, ciudades, soluciones, soluciones_detalles, ciudades_k, ciudades_fg, ciudades_temp
+from nom.models import estados, ciudades, soluciones, soluciones_detalles, ciudades_k, ciudades_fg, ciudades_temp, results
+import simplejson as json
 #from django.db.models import Q
 
 '''@dajaxice_register
@@ -14,7 +15,7 @@ def multiply( request, a, b ):
 @dajaxice_register
 def get_states( request ):
 	dajax = Dajax()
-	states = [[ '','Escoge un estado' ]]
+	#states = [[ '','Escoge un estado' ]]
 	states = [ [ '', 'Escoge un estado' ], ] + [ [ state.id, state.estado ] for state in estados.objects.all() ]
 	
 	options = []
@@ -42,8 +43,8 @@ def update_city( request, option ):
 	for city in cities:
 		options.append( "<option value='%s'>%s</option>" % ( city[0], city[1]) )
 
-	#dajax.assign( '#cities', 'innerHTML', ''.join( options ) )
-	dajax.assign( '#id_city', 'innerHTML', ''.join( options ) )
+	dajax.assign( '#cities', 'innerHTML', ''.join( options ) )
+	#dajax.assign( '#id_city', 'innerHTML', ''.join( options ) )
 	return dajax.json()
 
 
@@ -68,7 +69,7 @@ def get_ubication( request, hpart):
 		options.append( "<option value='%s'>%s</option>" % ( '0' , 'Escoge...' ) )
 		options.append( "<option value='%s'>%s</option>" % ( 'piso' , 'Piso' ) )
 
-	dajax.assign( '#id_ubication', 'innerHTML', ''.join( options ) )
+	dajax.assign( '#ubication', 'innerHTML', ''.join( options ) )
 	return dajax.json()
 
 
@@ -92,13 +93,13 @@ def get_materials( request, house_part ):
 			window_options.append( "<option value='%s'>%s</option>" % ( sol.id, sol.nombre) )
 
 	if ( house_part == 'muro' ):
-		dajax.assign( '#id_material', 'innerHTML', ''.join( wall_options ) )
+		dajax.assign( '#material', 'innerHTML', ''.join( wall_options ) )
 	elif ( house_part == 'techo' ):
-		dajax.assign( '#id_material', 'innerHTML', ''.join( roof_options ) )
+		dajax.assign( '#material', 'innerHTML', ''.join( roof_options ) )
 	elif ( house_part == 'ventana' ):
-		dajax.assign( '#id_material', 'innerHTML', ''.join( window_options ) )
+		dajax.assign( '#material', 'innerHTML', ''.join( window_options ) )
 	elif ( house_part == 'piso' ):
-		dajax.assign( '#id_material', 'innerHTML', ''.join( floor_options ) )
+		dajax.assign( '#material', 'innerHTML', ''.join( floor_options ) )
 
 	return dajax.json()
 
@@ -139,10 +140,11 @@ def get_k(city, floors):
 
 
 @dajaxice_register
-def calculate(request, city, floors):
+def calculate( request, city, floors):
 	dajax = Dajax()
 	state = request.session.get( 'state' )
 	materials = request.session.get( 'materials' )
+
 	city = int(city)
 	floors = int(floors)
 	request.session['city'] = city
@@ -272,6 +274,15 @@ def calculate(request, city, floors):
 
 	ganCalPorcentaje = ( ganCalTotMuroRef - ganCalTotMuroProy) / (ganCalTotMuroRef * -1)
 
-
+	request.session['nom'] = ganCalPorcentaje * 100
 	dajax.add_data( ganCalPorcentaje * 100 , 'result')
 	return dajax.json()
+
+def insert_data( result ):
+	state = request.session.get( 'state' )
+	city = request.session.get( 'city' )
+	nfloors = request.session.get( 'floors' )
+	materials = json.dumps( request.session.get( 'materials' ) )
+
+	data = results( estado=state, ciudad=city, pisos=nfloors, materiales=materials, nom=result )
+	data.save()
