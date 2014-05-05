@@ -111,9 +111,6 @@ def submit_material( request, h_part, ubication, material, area ):
 	materials =	[]
 	options = []
 	
-	if request.session.get( 'materials' ):
-		materials = request.session.pop( 'materials' )
-		
 	materials.append( user_materials )
 	request.session['materials'] = materials
 

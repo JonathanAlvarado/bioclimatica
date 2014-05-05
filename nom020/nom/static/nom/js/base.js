@@ -47,6 +47,5 @@ function send_form(){
 }
 
 function result(data){
-	alert(data);
-	$( "#result" ).html( "Eficiente en un "+data );
+	$( "#result" ).html( "Eficiente en un "+ data );
 }
