@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'nom',
     'dajaxice',
     'dajax',
+    'analytics',
 )
 
 MIDDLEWARE_CLASSES = (
