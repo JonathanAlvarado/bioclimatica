@@ -287,8 +287,11 @@ def calculate( request, city, floors):
 
 		request.session['nom'] = ganCalPorcentaje * 100
 		dajax.add_data( ganCalPorcentaje * 100 , 'result')
-		return dajax.json()
+		
+	else:
+		dajax.add_css_class('p .error', 'red')
 
+	return dajax.json()
 
 def insert_data( result ):
 	state = request.session.get( 'state' )
