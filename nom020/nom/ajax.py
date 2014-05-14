@@ -30,7 +30,7 @@ def get_states( request ):
 @dajaxice_register
 def update_city( request, option ):
 	dajax = Dajax()
-	cities = [[ '','Escoge una ciudad' ]]
+	cities = [[ '0','Escoge una ciudad' ]]
 	
 	request.session['state'] = int(option)
 
@@ -141,7 +141,7 @@ def check_orientations():
 	orientations = ['norte','sur','este','oeste']
 
 	for o in orientations:
-		if any( i in x for x in a ) == False
+		if any( i in x for x in a ) == False:
 			return False
 			break
 	return True

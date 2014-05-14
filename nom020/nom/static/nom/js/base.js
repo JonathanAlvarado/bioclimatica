@@ -49,3 +49,16 @@ function send_form(){
 function result(data){
 	$( "#result" ).html( "Eficiente en un "+ data );
 }
+
+function validateForm() {
+	var isValid = true;
+	
+	$('.form-field').each(function() {
+		if ( $(this).val() === '0' )
+			$(this).css( { "border": '#FF0000 1px solid'} );
+			isValid = false;
+	});
+
+	if ( isValid )
+		send_form()
+}

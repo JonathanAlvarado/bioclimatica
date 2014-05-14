@@ -12,15 +12,15 @@
     <div class="container">
 	   <form id="data_form" action="" method="post" accept-charset="utf-8">
 	   		<label for="states">Estado</label>
-            <select id="states" size="1" name="state"></select>
+            <select id="states" class="form-field" size="1" name="state"></select>
 
             <label for="cities">Ciudad</label>
-            <select id="cities" size="1" name="city">
+            <select id="cities" class="form-field" size="1" name="city">
             	<option value="0">Escoge una ciudad</option>
             </select>
 
             <label for="floors">Total de pisos</label>
-        	<select id="floors" size="1" name="nfloors">
+        	<select id="floors" class="form-field" size="1" name="nfloors">
             	<option value="0">Total de pisos</option>
             	<option value="1">1 a 3 pisos</option>
             	<option value="4">Más de 3 pisos</option>
@@ -56,7 +56,8 @@
 
 			<input class="button" type="button" value="Insertar" onclick="submit_material();"/>
 
-            <input class="button" type="button" value="Calcular" onclick="send_form();"/>
+            <!--<input class="button" type="button" value="Calcular" onclick="send_form();"/>-->
+            <input class="button" type="button" value="Calcular" onclick="validateForm();"/>
         </form>
 
         <!--<input type="text" value="5" id="a"> x
