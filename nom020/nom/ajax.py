@@ -296,8 +296,9 @@ def calculate( request, city, floors):
 		ganCalPorcentaje = ( ganCalTotMuroRef - ganCalTotMuroProy) / (ganCalTotMuroRef * -1)
 
 		request.session['nom'] = ganCalPorcentaje * 100
-		#insert_data( ganCalPorcentaje * 100 )
-		dajax.add_data( ganCalPorcentaje * 100 , 'result')
+		insert_data( request )
+		
+		dajax.add_data( ganCalPorcentaje * 100 , 'result' )
 
 	else:
 		dajax = Dajax()
@@ -307,11 +308,11 @@ def calculate( request, city, floors):
 
 	return dajax.json()
 
-def insert_data( result ):
-	state = request.session.get( 'state' )
-	city = request.session.get( 'city' )
-	nfloors = request.session.get( 'floors' )
+def insert_data( request ):
+	state =  estados.objects.get( id = request.session.get( 'state' ) )
+	city = ciudades.objects.get( id = request.session.get( 'city' ) )
+	nfloors = request.session.get( 'floors' ) 
 	materials = json.dumps( request.session.get( 'materials' ) )
-
-	data = results( estado=state, ciudad=city, pisos=nfloors, materiales=materials, nom=result )
+	result = request.session.get( 'nom' ) 
+	data = resultados( estado=state, ciudad=city, pisos=nfloors, materiales=materials, nom=result )
 	data.save()
