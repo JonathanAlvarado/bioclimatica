@@ -1,6 +1,6 @@
 from dajaxice.decorators import dajaxice_register
 from dajax.core import Dajax
-from nom.models import estados, ciudades, soluciones, soluciones_detalles, ciudades_k, ciudades_fg, ciudades_temp, results
+from nom.models import estados, ciudades, soluciones, soluciones_detalles, ciudades_k, ciudades_fg, ciudades_temp, resultados
 import simplejson as json
 #from django.db.models import Q
 
@@ -14,6 +14,7 @@ def multiply( request, a, b ):
 
 @dajaxice_register
 def get_states( request ):
+	request.session.flush()
 	dajax = Dajax()
 	#states = [[ '','Escoge un estado' ]]
 	states = [ [ '', 'Escoge un estado' ], ] + [ [ state.id, state.estado ] for state in estados.objects.all() ]
@@ -61,7 +62,7 @@ def get_ubication( request, hpart):
 		options.append( "<option value='%s'>%s</option>" % ( '0' , 'Escoge...' ) )
 		options.append( "<option value='%s'>%s</option>" % ( 'techo' , 'Techo' ) )
 
-	elif ( hpart == 'ventana') or (hpart == 'pared' ):
+	elif ( hpart == 'ventana') or (hpart == 'muro' ):
 		for ub in ubications:
 			options.append( "<option value='%s'>%s</option>" % ( ub[0], ub[1]) )
 
@@ -111,12 +112,20 @@ def submit_material( request, h_part, ubication, material, area ):
 	materials =	[]
 	options = []
 	
-	materials.append( user_materials )
+	#materials.append( user_materials )
+	if ( request.session.get('materials') ):
+		materials = request.session.get('materials')
+	
+	request.session['materials'] = []
+	materials.append(user_materials)
 	request.session['materials'] = materials
 
-	for mat in materials:
-		nom_mat = soluciones.objects.get( id= int( mat[2] ) )
-		options.append( "<tr><th>%s</th><th>%s</th><th>%s</th><th>%s m.</th></tr>" % ( mat[0], mat[1], nom_mat.nombre, mat[3] ) )
+	#for mat in materials:
+		#nom_mat = soluciones.objects.get( id= int( mat[2] ) )
+		#options.append( "<tr><th>%s</th><th>%s</th><th>%s</th><th>%s m.</th></tr>" % ( mat[0], mat[1], nom_mat.nombre, mat[3] ) )
+
+	nom_mat = soluciones.objects.get( id= int( material ) )
+	options.append( "<tr><th>%s</th><th>%s</th><th>%s</th><th>%s m.</th></tr>" % ( h_part, ubication, nom_mat.nombre, area ) )	
 
 	#dajax.add_data( data, callback_function)
 	dajax.add_data( options , 'ajax_table')
@@ -287,10 +296,13 @@ def calculate( request, city, floors):
 		ganCalPorcentaje = ( ganCalTotMuroRef - ganCalTotMuroProy) / (ganCalTotMuroRef * -1)
 
 		request.session['nom'] = ganCalPorcentaje * 100
+		#insert_data( ganCalPorcentaje * 100 )
 		dajax.add_data( ganCalPorcentaje * 100 , 'result')
 
 	else:
 		dajax = Dajax()
+		#materials = request.session.get( 'materials' )
+		#dajax.alert(materials)
 		dajax.add_data( 'error' , 'result')
 
 	return dajax.json()

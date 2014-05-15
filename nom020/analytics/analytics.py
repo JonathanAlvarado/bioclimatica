@@ -1,12 +1,12 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from nom.models import results
+from nom.models import resultados
 
 pd.set_option('max_columns', 50)
 
 def read_data():
-	query_set = results.objects.all()
+	query_set = resultados.objects.all()
 	data = qs.values('estado', 'ciudad', 'pisos', 'materiales', 'nom')
 	data_frame = pd.DataFrame.from_records( data )
 
@@ -19,6 +19,8 @@ def discretized_data( data ):
 	freq = pd.value_counts( cats )
 	return freq
 
+
+
 def group_data( table ):
 	groups = []
 	for key, group in pd.groupby( table, lambda x: x[1] ):
@@ -27,4 +29,3 @@ def group_data( table ):
 			total += int( item[2] )
 
 		groups.append( group[0][1],total )
-

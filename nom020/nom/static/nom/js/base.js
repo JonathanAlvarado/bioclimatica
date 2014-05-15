@@ -39,7 +39,9 @@ function submit_material(){
 }
 
 function ajax_table(data){
-	$('table tbody').append(data).trigger('footable_redraw');
+	//$('table tbody').append(data).trigger('footable_redraw');
+	$( 'table tbody' ).append( data );
+	$( '.footable' ).trigger( 'footable_redraw' );
 }
 
 function send_form(){

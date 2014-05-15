@@ -83,7 +83,7 @@ class soluciones_detalles( models.Model ):
 	se = models.FloatField( default=0.0 )
 	coeficiente_sombreado = models.FloatField( default=0.0 )
 
-class results( models.Model ):
+class resultados( models.Model ):
 	estado = models.ForeignKey( estados )
 	ciudad = models.ForeignKey( ciudades )
 	pisos = models.IntegerField( default=0 )
