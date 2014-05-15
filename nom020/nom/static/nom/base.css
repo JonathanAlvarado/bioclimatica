@@ -269,4 +269,6 @@
 
 /* #Mine
 ================================================== */
-p.error {display:none;}
+p.error {
+	display:none;
+	color:red;}

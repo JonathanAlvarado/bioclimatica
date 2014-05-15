@@ -136,14 +136,14 @@ def get_k(city, floors):
 	return k_roof,k_wall
 
 
-def check_orientations():
+def check_orientations( request ):
 	materials = request.session.get( 'materials' )
-	orientations = ['norte','sur','este','oeste']
+	orientations = ['norte','sur','este','oeste', 'techo']
 
 	for o in orientations:
-		if any( i in x for x in a ) == False:
+		if any( o in mat for mat in materials ) == False:
 			return False
-			break
+
 	return True
 
 @dajaxice_register
@@ -151,8 +151,9 @@ def calculate( request, city, floors):
 	# pandas http://www.dyinglovegrape.com/data_analysis/part1/1da3.php
 	# pandas http://bconnelly.net/2013/10/summarizing-data-in-python-with-pandas/
 
-	if check_orientations() == True:
+	if check_orientations( request ) == True:
 		dajax = Dajax()
+		
 		state = request.session.get( 'state' )
 		materials = request.session.get( 'materials' )
 
@@ -287,9 +288,10 @@ def calculate( request, city, floors):
 
 		request.session['nom'] = ganCalPorcentaje * 100
 		dajax.add_data( ganCalPorcentaje * 100 , 'result')
-		
+
 	else:
-		dajax.add_css_class('p .error', 'red')
+		dajax = Dajax()
+		dajax.add_data( 'error' , 'result')
 
 	return dajax.json()
 
