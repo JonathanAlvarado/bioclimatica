@@ -18,7 +18,6 @@ def get_states( request ):
 	dajax = Dajax()
 	#states = [[ '','Escoge un estado' ]]
 	states = [ [ '', 'Escoge un estado' ], ] + [ [ state.id, state.estado ] for state in estados.objects.all() ]
-	
 	options = []
 
 	for state in states:
@@ -31,15 +30,13 @@ def get_states( request ):
 @dajaxice_register
 def update_city( request, option ):
 	dajax = Dajax()
-	cities = [[ '0','Escoge una ciudad' ]]
-	
+	cities = [[ '0','Escoge una ciudad' ]]	
 	request.session['state'] = int(option)
+	options = []
 
 	for city in ciudades.objects.all():
 		if city.estado_id == int(option):
 			cities.append([ city.id, city.ciudad ])
-	
-	options = []
 	
 	for city in cities:
 		options.append( "<option value='%s'>%s</option>" % ( city[0], city[1]) )

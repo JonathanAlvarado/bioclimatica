@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     url( r'^time/plus/(\d{1,2})/$',hours_ahead ),
     #url( r'^nom/$', calculation ),
     url(r'^nom/', include('nom.urls')),
+    url(r'^analytics/', include('analytics.urls')),
 )

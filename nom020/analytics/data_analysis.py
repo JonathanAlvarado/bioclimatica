@@ -12,13 +12,13 @@ def read_data():
 
 	return data_frame
 
+
 def discretized_data( data ):
 	efficiency = [ 0, 25, 35, 50, 75, 100 ]
 	group_names = ['0-25%', '25-35%', '35-50%', '50-75%', '75-100%']
 	cats = pd.cut( data, efficiency, group_names )
 	freq = pd.value_counts( cats )
 	return freq
-
 
 
 def group_data( table ):
