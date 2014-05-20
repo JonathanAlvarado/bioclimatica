@@ -1,7 +1,7 @@
-{% extends "nom/base.html" %}
+{% extends "analytics/base.html" %}
 {% load staticfiles %}
 
-{% block title %}Análisis de datos{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {%block css %}
 
@@ -10,12 +10,13 @@
 {% block content %}
 
     <div class="container">
-    <p>Prueba</p>
-			
+	<p>{{ data }}</p>
     </div>
     <br/><br/>
 
 {% endblock %}
+
+
 
 {% block jquerys %}
 

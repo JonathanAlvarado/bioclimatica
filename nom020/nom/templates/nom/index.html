@@ -59,13 +59,14 @@
 
             <!--<input class="button" type="button" value="Calcular" onclick="send_form();"/>-->
             <input class="button" type="button" value="Calcular" onclick="validateForm();"/>
+            <input class="button" type="button" value="Terminar" onclick="save_data();"/>
         </form>
 
         <!--<input type="text" value="5" id="a"> x
 		<input type="text" value="6" id="b"> =
 		<input type="text" value="" id="result">
 		<input type="button" value="Multiply!" onclick="calculate();">-->
-
+		<p id="result">Eficiente en un --</p>
 		<table class="footable">
 			<thead>
 				<tr>
@@ -81,7 +82,6 @@
 		</table>
     </div>
     <br/><br/>
-    <p id="result">Eficiente en un --</p>
 {% endblock %}
 
 {% block jquerys %}

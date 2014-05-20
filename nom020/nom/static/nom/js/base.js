@@ -71,3 +71,7 @@ function validateForm() {
 		send_form();
 	}
 }
+
+function save_data(){
+	Dajaxice.nom.insert_data( Dajax.process )
+}

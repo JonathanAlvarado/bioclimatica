@@ -8,7 +8,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>{% block title %}{% endblock %}</title>
+	<title></title>
 	<meta name="description" content="">
 	<meta name="author" content="">
 
@@ -18,9 +18,9 @@
 
 	<!-- CSS
   ================================================== -->
-	<link rel="stylesheet" type="text/css" href="{% static 'nom/base.css' %}" />
-	<link rel="stylesheet" type="text/css" href="{% static 'nom/layout.css' %}" />
-	<link rel="stylesheet" type="text/css" href="{% static 'nom/skeleton.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'analytics/base.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'analytics/layout.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'analytics/skeleton.css' %}" />
 
 	{% block css %}{% endblock %}
 
@@ -30,10 +30,10 @@
 
 	<!-- Favicons
 	================================================== -->
-	<link rel="shortcut icon" href="{% static 'nom/images/favicon.ico' %}"/>
-	<link rel="apple-touch-icon" href="{% static 'nom/images/apple-touch-icon.png' %}"/>
-	<link rel="apple-touch-icon" sizes="72x72" href="{% static 'nom/images/apple-touch-icon-72x72.png' %}"/>
-	<link rel="apple-touch-icon" sizes="114x114" href="{% static 'nom/images/apple-touch-icon-114x114.png' %}"/>
+	<link rel="shortcut icon" href="{% static 'analytics/images/favicon.ico' %}"/>
+	<link rel="apple-touch-icon" href="{% static 'analytics/images/apple-touch-icon.png' %}"/>
+	<link rel="apple-touch-icon" sizes="72x72" href="{% static 'analytics/images/apple-touch-icon-72x72.png' %}"/>
+	<link rel="apple-touch-icon" sizes="114x114" href="{% static 'analytics/images/apple-touch-icon-114x114.png' %}"/>
 
 </head>
 
@@ -43,7 +43,7 @@
 
 	<div class="container">
 		<div class="sixteen columns">
-			<h1 class="remove-bottom" style="margin-top: 40px">Prueba</h1>
+			<h1 class="remove-bottom" style="margin-top: 40px">{% block title %}{% endblock %}</h1>
 			
 			<hr />
 		</div>

@@ -7,7 +7,7 @@ pd.set_option('max_columns', 50)
 
 def read_data():
 	query_set = resultados.objects.all()
-	data = qs.values('estado', 'ciudad', 'pisos', 'materiales', 'nom')
+	data = query_set.values('estado', 'ciudad', 'pisos', 'materiales', 'nom')
 	data_frame = pd.DataFrame.from_records( data )
 
 	return data_frame
