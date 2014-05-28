@@ -122,7 +122,7 @@ def submit_material( request, h_part, ubication, material, area ):
 		#options.append( "<tr><th>%s</th><th>%s</th><th>%s</th><th>%s m.</th></tr>" % ( mat[0], mat[1], nom_mat.nombre, mat[3] ) )
 
 	nom_mat = soluciones.objects.get( id= int( material ) )
-	options.append( "<tr><th>%s</th><th>%s</th><th>%s</th><th>%s m.</th></tr>" % ( h_part, ubication, nom_mat.nombre, area ) )	
+	options.append( "<tr><th>%s</th><th>%s</th><th>%s</th><th>%s m&sup2;</th></tr>" % ( h_part, ubication, nom_mat.nombre, area ) )	
 
 	#dajax.add_data( data, callback_function)
 	dajax.add_data( options , 'ajax_table')
